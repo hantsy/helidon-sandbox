@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.logging.LogManager;
 
 import io.helidon.config.Config;
+import io.helidon.webserver.ErrorHandler;
 import io.helidon.webserver.Routing;
 import io.helidon.webserver.ServerConfiguration;
 import io.helidon.webserver.WebServer;
@@ -46,7 +47,18 @@ public final class Main {
             .register(JsonSupport.get())
             .register("/greet", new GreetService())
             .register("/posts", new PostService(new PostRepository()))
+            .error(Throwable.class, handleErrors())
             .build();
+    }
+
+    private static ErrorHandler<Throwable> handleErrors() {
+        return (req, res, t) -> {
+            if (t instanceof PostNotFoundException) {
+                res.status(404).send(((PostNotFoundException) t).getMessage());
+            } else {
+                req.next(t);
+            }
+        };
     }
 
     /**

@@ -68,7 +68,11 @@ public class PostService implements Service {
     }
 
     private void getPostById(ServerRequest serverRequest, ServerResponse serverResponse) {
-        Post post = this.posts.getById(serverRequest.path().param("id"));
+        String id = serverRequest.path().param("id");
+        Post post = this.posts.getById(id);
+        if (post == null) {
+            serverRequest.next(new PostNotFoundException(id));
+        }
         serverResponse.status(200).send(EntityUtils.toJsonObject(post));
     }
 

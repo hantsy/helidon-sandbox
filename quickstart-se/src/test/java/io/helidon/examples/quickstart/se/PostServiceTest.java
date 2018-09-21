@@ -23,7 +23,6 @@ public class PostServiceTest {
 
     private static WebServer webServer;
 
-
     private Client client;
 
     @BeforeAll
@@ -68,6 +67,17 @@ public class PostServiceTest {
             assertTrue(results != null);
             LOGGER.info("results.size()::" + results.size());
             assertTrue(results.size() == 2);
+        }
+    }
+
+
+    @Test
+    public void testNoneExistingPostById() throws Exception {
+        String path = "/posts/noneexisting";
+        WebTarget targetGetNoneExistingPost = client.target(URI.create("http://localhost:" + webServer.port() + path));
+
+        try (Response resGetNoneExisting = targetGetNoneExistingPost.request().accept(MediaType.APPLICATION_JSON_TYPE).get()) {
+            assertEquals(404, resGetNoneExisting.getStatus());
         }
     }
 
