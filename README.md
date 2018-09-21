@@ -4,9 +4,9 @@ Oracle open-sourced a project named [Helidon](https://helidon.io/) which is a co
 
 Helidon provides two programming models for developers.
 
-* Embrace [Reactive Streams](https://www.reactive-steams.org), and provides functional programming capabilities.
+* **helidon-se** embraces [Reactive Streams](https://www.reactive-steams.org) specification, and provides functional style programming capability.
 
-* For those familiar with Java EE/MicroProfile specifications, Helidon provides MicroProfile compatibility, it is easy to update yourself to Helidon.  
+* For those familiar with Java EE/MicroProfile specifications, **helidon-mp** provides MicroProfile compatibility, it is easy to update yourself to Helidon.  
 
 For the above cases, Helidon provides two Maven archetypes for generating the project skeleton in seconds. Follow the [Getting Started](https://helidon.io/docs/latest/#/getting-started) section of the official docs, it is easy to create a Helidon project via these Maven archetypes.
 
@@ -115,7 +115,7 @@ In the pom.xml file, it defines a `maven-dependency-plugin` plugin to copy all i
 * Then `start` the web server, setup a hook when it is started.
 * Set up a `shutdown` hook to the web server.
 
-The `createRouting` method configures the routing rules, here it connects `/greet` uri prefix to `GreetService`. The `GreetService` is an implementation of `io.helidon.webserver.Service`, its `update` method registers its own routine rules.
+The `createRouting` method configures the routing rules, here it connects `/greet` uri prefix to `GreetService`. The `GreetService` is an implementation of `io.helidon.webserver.Service`, its `update` method defines its own routine rules.
 
 
 ## Build your first REST APIs
@@ -254,11 +254,146 @@ public class PostService implements Service {
 Register it in the `Main` class. 
 
 ```java
-    private static Routing createRouting() {
-        //...
-            .register("/posts", new PostService(new PostRepository()))
-        //    .build();
-    }
+private static Routing createRouting() {
+	//...
+		.register("/posts", new PostService(new PostRepository()))
+	//    .build();
+}
+```
+
+Run the application by run Main class in your IDE. Let's have a try with our new created post APIs.
+
+Get all posts.
+
+```
+curl -v -X GET http://localhost:8080/posts
+Note: Unnecessary use of -X or --request, GET is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> GET /posts HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.55.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+< Date: Fri, 21 Sep 2018 21:27:15 +0800
+< transfer-encoding: chunked
+< connection: keep-alive
+<
+[{"id":"7150f8de-4377-4bf7-8c6f-049d5b822c1c","title":"Hello Helidon","content":"My first post of Helidon","createdAt":"2018-09-21T21:24:12.965"},{"id":"1c60fbb1-785c-4463-9e27-a0dcf771d66e","title":"Hello Again, Helidon","content":"My second post of Helidon","createdAt":"2018-09-21T21:24:12.965"}]* Connection #0 to host localhost left intact
+```
+
+Get post by id.
+
+```
+curl -v -X GET http://localhost:8080/posts/7150f8de-4377-4bf7-8c6f-049d5b822c1c
+Note: Unnecessary use of -X or --request, GET is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> GET /posts/7150f8de-4377-4bf7-8c6f-049d5b822c1c HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.55.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+< Date: Fri, 21 Sep 2018 21:27:55 +0800
+< transfer-encoding: chunked
+< connection: keep-alive
+<
+{"id":"7150f8de-4377-4bf7-8c6f-049d5b822c1c","title":"Hello Helidon","content":"My first post of Helidon","createdAt":"2018-09-21T21:24:12.965"}* Connection #0 to host localhost left intact
+```
+
+Create a Post.
+
+```
+curl -v -X POST http://localhost:8080/posts -d "{\"title\":\"My test post\", \"content\":\"Content of my test post\"}" -H "Content-Type:application/json"
+Note: Unnecessary use of -X or --request, POST is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> POST /posts HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.55.1
+> Accept: */*
+> Content-Type:application/json
+> Content-Length: 61
+>
+* upload completely sent off: 61 out of 61 bytes
+< HTTP/1.1 201 Created
+< Date: Fri, 21 Sep 2018 21:29:28 +0800
+< Location: /posts/cec239d7-f6da-48ff-ab42-9e6a4416d7f0
+< transfer-encoding: chunked
+< connection: keep-alive
+<
+* Connection #0 to host localhost left intact
+```
+
+Verify if it is created.
+
+```
+curl -v -X GET http://localhost:8080/posts
+Note: Unnecessary use of -X or --request, GET is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> GET /posts HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.55.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+< Date: Fri, 21 Sep 2018 21:29:58 +0800
+< transfer-encoding: chunked
+< connection: keep-alive
+<
+[{"id":"cec239d7-f6da-48ff-ab42-9e6a4416d7f0","title":"My test post","content":"Content of my test post","createdAt":"2018-09-21T21:29:28.285"},{"id":"7150f8de-4377-4bf7-8c6f-049d5b822c1c","title":"Hello Helidon","content":"My first post of Helidon","createdAt":"2018-09-21T21:24:12.965"},{"id":"1c60fbb1-785c-4463-9e27-a0dcf771d66e","title":"Hello Again, Helidon","content":"My second post of Helidon","createdAt":"2018-09-21T21:24:12.965"}]* Connection #0 to host localhost left intact
+```
+
+Delete a post by id.
+
+
+```
+curl -v -X DELETE http://localhost:8080/posts/cec239d7-f6da-48ff-ab42-9e6a4416d7f0
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> DELETE /posts/cec239d7-f6da-48ff-ab42-9e6a4416d7f0 HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.55.1
+> Accept: */*
+>
+< HTTP/1.1 204 No Content
+< Date: Fri, 21 Sep 2018 21:30:46 +0800
+< connection: keep-alive
+<
+* Connection #0 to host localhost left intact
+```
+
+Verify the post is deleted.
+
+```
+curl -v -X GET http://localhost:8080/posts
+Note: Unnecessary use of -X or --request, GET is already inferred.
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> GET /posts HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.55.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Content-Type: application/json
+< Date: Fri, 21 Sep 2018 21:31:24 +0800
+< transfer-encoding: chunked
+< connection: keep-alive
+<
+[{"id":"7150f8de-4377-4bf7-8c6f-049d5b822c1c","title":"Hello Helidon","content":"My first post of Helidon","createdAt":"2018-09-21T21:24:12.965"},{"id":"1c60fbb1-785c-4463-9e27-a0dcf771d66e","title":"Hello Again, Helidon","content":"My second post of Helidon","createdAt":"2018-09-21T21:24:12.965"}]* Connection #0 to host localhost left intact
 ```
 
 
