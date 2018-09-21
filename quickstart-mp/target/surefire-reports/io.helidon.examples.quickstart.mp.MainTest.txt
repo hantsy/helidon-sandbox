@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: io.helidon.examples.quickstart.mp.MainTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.812 sec - in io.helidon.examples.quickstart.mp.MainTest
