@@ -34,14 +34,14 @@ public class CommentService implements Service{
     }
 
     private void getAllComments(ServerRequest serverRequest, ServerResponse serverResponse) {
-        String postId = serverRequest.path().param("id");
+        String postId = serverRequest.path().absolute().param("id");
         LOGGER.info("comments of post id::" + postId);
         serverResponse.send(this.toJsonArray(this.comments.allByPostId(postId)));
     }
 
     private void saveComment(ServerRequest serverRequest, ServerResponse serverResponse, JsonObject content) {
 
-        String postId = serverRequest.path().param("id");
+        String postId = serverRequest.path().absolute().param("id");
         String body = content.get("content") == null ? null : content.getString("content");
 
         if (body == null) {
