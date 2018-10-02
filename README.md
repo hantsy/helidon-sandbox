@@ -4,15 +4,17 @@ Oracle open-sourced a project named [Helidon](https://helidon.io/) which is a co
 
 Helidon provides two programming models for developers.
 
-* **helidon-se** embraces [Reactive Streams](https://www.reactive-steams.org) specification, and provides functional style programming capability.
+* **helidon-se** embraces [Reactive Streams](https://www.reactive-steams.org) specification, and provides functional style programming experience.
 
 * For those familiar with Java EE/MicroProfile specifications, **helidon-mp** provides MicroProfile compatibility, it is easy to update yourself to Helidon.  
 
-For the above cases, Helidon provides two Maven archetypes for generating the project skeleton in seconds. Follow the [Getting Started](https://helidon.io/docs/latest/#/getting-started) section of the official docs, it is easy to create a Helidon project via these Maven archetypes.
+For the above cases, Helidon provides two Maven archetypes for generating the project skeleton in seconds. Follow the [Getting Started](https://helidon.io/docs/latest/#/getting-started) guide of the official docs, it is easy to create a Helidon project via these Maven archetypes.
 
-Make sure you have installed all [prerequisites](https://helidon.io/docs/latest/#/getting-started/01_prerequisites), let's create your first Helidon project.
+Firstly, let's make sure you have installed all items mentioned in the [prerequisites](https://helidon.io/docs/latest/#/getting-started/01_prerequisites), next let's create your first Helidon project.
 
 ## Kick start your first helidon application
+
+In this post, we will create *Helidon SE* project.
 
 ### Generate project skeleton
 
@@ -38,7 +40,7 @@ Open a terminal tool, enter the **quickstart-se** folder, run the following comm
 mvn clean package
 ```
 
-After it is done, there is a jar **quickstart-se.jar** generated in the *target* folder.
+When it is finished, you will see there is a jar **quickstart-se.jar** generated in the *target* folder.
 
 ### Run 
 
@@ -71,7 +73,7 @@ curl -X PUT http://localhost:8080/greet/greeting/Hantsy
 
 ### Explore the source codes
 
-Import the source codes into your favorite IDE. 
+Import the source codes into your favorite IDE, the project structure is like this. 
 
 ```
 .
@@ -113,16 +115,29 @@ In the pom.xml file, it defines a `maven-dependency-plugin` plugin to copy all i
 * Load the server configuration via helidon Config APIs.
 * Create a `WebServer` instance via `WebServer.create`, which accepts a `ServerConfiguration` and a `Routing` instance as arguments.
 * Then `start` the web server, setup a hook when it is started.
-* Set up a `shutdown` hook to the web server.
+* Set up a `shutdown` hook to listen the web server when it is stopped.
 
 The `createRouting` method configures the routing rules, here it connects `/greet` uri prefix to `GreetService`. The `GreetService` is an implementation of `io.helidon.webserver.Service`, its `update` method defines its own routine rules.
 
 
-## Build your first REST APIs
+## Build your REST APIs
 
-Let's create your own REST APIs, as an example, I reuse the blog application concept which I have used to demonstrate different technologies, check the sample codes for Spring and Java EE from My github account. 
+As an example, we reuse the blog application concept which I have used to demonstrate different technologies, check the sample codes for Spring and Java EE from My github account. 
 
-Firstly, create a `Post` class which represents the post entries. The `of` method provides a factory to create a new post quickly.
+
+### Cook your first APIs
+
+Let's start with cooking the `Post` APIs, the expected APIs are listed below.
+
+URI|request|response|description
+---|---|---|---
+/posts|GET|200, [{id:'1', title:'title'}, {id:'2', title:'title 2'}]| Get all posts
+/posts|POST {title:'title',content:'content'} |201, set new created entity url in Location header| Create a new post
+/posts/{id}|GET|{id:'1', title:'title',content:'content'}| Get a post by id
+/posts/{id}|PUT {title:'title',content:'content'} |204, no content| Update specific post by id
+/posts/{id}|DELETE|204, no content| Delete a post by id
+
+Firstly, create a `Post` class which represents the post entries. 
 
 ```java
 public class Post implements Serializable {
@@ -146,7 +161,9 @@ public class Post implements Serializable {
 }
 ```
 
-Create a dummy `PostRepository` for retrieving from and saving into database, currently I used a `ConcurrentHashMap` instead of a real data storage.
+The `of` method provides a factory to create a new post quickly.
+
+Create a dummy `PostRepository` for retrieving from and saving into database, currently I used a `ConcurrentHashMap` instead of a real world data storage.
 
 ```java
 public class PostRepository {
@@ -251,6 +268,8 @@ public class PostService implements Service {
 }
 ```
 
+>Note: Currently Helidon only supports JSON-P for transforming JSON data automatically. As you see in the above codes, you have to convert your data into a JSON-P specific `JsonObject` or `JsonArray`.
+
 Register it in the `Main` class. 
 
 ```java
@@ -307,7 +326,7 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 {"id":"7150f8de-4377-4bf7-8c6f-049d5b822c1c","title":"Hello Helidon","content":"My first post of Helidon","createdAt":"2018-09-21T21:24:12.965"}* Connection #0 to host localhost left intact
 ```
 
-Create a Post.
+Create a new Post.
 
 ```
 curl -v -X POST http://localhost:8080/posts -d "{\"title\":\"My test post\", \"content\":\"Content of my test post\"}" -H "Content-Type:application/json"
@@ -332,7 +351,9 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 * Connection #0 to host localhost left intact
 ```
 
-Verify if it is created.
+The new created Post can be fetched by URL specified in the response`Location` header.
+
+Verify if it is created successfully.
 
 ```
 curl -v -X GET http://localhost:8080/posts
@@ -374,7 +395,7 @@ curl -v -X DELETE http://localhost:8080/posts/cec239d7-f6da-48ff-ab42-9e6a4416d7
 * Connection #0 to host localhost left intact
 ```
 
-Verify the post is deleted.
+Verify if the post is deleted.
 
 ```
 curl -v -X GET http://localhost:8080/posts
@@ -396,7 +417,157 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 [{"id":"7150f8de-4377-4bf7-8c6f-049d5b822c1c","title":"Hello Helidon","content":"My first post of Helidon","createdAt":"2018-09-21T21:24:12.965"},{"id":"1c60fbb1-785c-4463-9e27-a0dcf771d66e","title":"Hello Again, Helidon","content":"My second post of Helidon","createdAt":"2018-09-21T21:24:12.965"}]* Connection #0 to host localhost left intact
 ```
 
+### Create comment APIs
+
+Imagine a user can comment on a certain post, we can add the following comment APIs.
 
 
+| Uri                    | Http Method | Request                                  | Response                                 | Description                              |
+| ---------------------- | ----------- | ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| /posts/{id}/comments | GET         |                                          | 200, [{'id':1, 'content':'comment content'},{}] | Get all comments of the certain post     |
+| /posts/{id}/comments | POST        | {'content':'test content'}               | 201                                      | Create a new comment of the certain post |
 
-  
+Like building the Post APIs, create a `Comment` class for presenting the comment entity.
+
+```java
+public class Comment implements Serializable {
+    private String id;
+    private String post;
+    private String content;
+    private LocalDateTime createdAt;
+
+    public static Comment of(String postId, String content) {
+        Comment comment = new Comment();
+
+        comment.setId(UUID.randomUUID().toString());
+        comment.setContent(content);
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setPost(postId);
+
+        return comment;
+    }
+	
+	// omits setters and getters, etc
+}
+```
+
+Create a `CommentRepository` for data operation.
+
+```java
+public class CommentRepository {
+    static Map<String, Comment> data = new ConcurrentHashMap<>();
+
+    public List<Comment> all() {
+        return new ArrayList<>(data.values());
+    }
+
+    public Comment getById(String id) {
+        return data.get(id);
+    }
+
+    public Comment save(Comment comment) {
+        data.put(comment.getId(), comment);
+        return comment;
+    }
+
+    public void deleteById(String id) {
+        data.remove(id);
+    }
+
+    public List<Comment> allByPostId(String id) {
+        return data.values().stream().filter(c -> c.getPost().equals(id)).collect(toList());
+    }
+}
+```
+
+And a `CommentService` class for handling requests.
+
+```java
+public class CommentService implements Service{
+    private final static Logger LOGGER = Logger.getLogger(CommentService.class.getName());
+    private final CommentRepository comments;
+
+    public CommentService(CommentRepository commentRepository) {
+        this.comments = commentRepository;
+    }
+
+    @Override
+    public void update(Routing.Rules rules) {
+        rules.get("/", this::getAllComments)
+            .post("/", Handler.of(JsonObject.class, this::saveComment, this::errorHandler));
+    }
+
+    private void errorHandler(ServerRequest serverRequest, ServerResponse serverResponse, Throwable throwable) {
+        if (throwable instanceof CommentBodyCanNotBeEmptyException) {
+            serverResponse.status(400).send();
+        } else {
+            serverRequest.next(throwable);
+        }
+    }
+
+    private void getAllComments(ServerRequest serverRequest, ServerResponse serverResponse) {
+        String postId = serverRequest.path().absolute().param("id");
+        LOGGER.info("comments of post id::" + postId);
+        serverResponse.send(this.toJsonArray(this.comments.allByPostId(postId)));
+    }
+
+    private void saveComment(ServerRequest serverRequest, ServerResponse serverResponse, JsonObject content) {
+
+        String postId = serverRequest.path().absolute().param("id");
+        String body = content.get("content") == null ? null : content.getString("content");
+
+        if (body == null) {
+            serverRequest.next(new CommentBodyCanNotBeEmptyException());
+        }
+
+        CompletableFuture.completedFuture(content)
+            .thenApply(c -> Comment.of(postId, body))
+            .thenApply(this.comments::save)
+            .thenCompose(
+                c -> {
+                    serverResponse.status(201)
+                        .headers()
+                        .location(URI.create("/posts/" + postId + "/comments/" + c.getId()));
+                    return serverResponse.send();
+                }
+            );
+    }
+
+
+    private JsonObject toJsonObject(Comment comment) {
+        return Json.createObjectBuilder()
+            .add("id", comment.getId())
+            .add("post", comment.getPost())
+            .add("content", comment.getContent())
+            .add("createdAt", comment.getCreatedAt().toString())
+            .build();
+    }
+
+    private JsonArray toJsonArray(List<Comment> comments) {
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+        comments.forEach(p -> {
+            jsonArrayBuilder.add(toJsonObject(p));
+        });
+
+        return jsonArrayBuilder.build();
+    }
+
+
+}
+```
+
+Register it as a sub service under `PostService`.
+
+```java
+@Override
+public void update(Routing.Rules rules) {
+    //...
+		.register("/{id}/comments", new CommentService(new CommentRepository()));
+}
+```
+
+>Note: In the `CommentService`, we have to use `path().absolute().param()`  to get the param in the parent path, `path().param()` will return null. 
+
+### Handle error in Routing
+
+
