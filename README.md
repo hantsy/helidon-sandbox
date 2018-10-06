@@ -14,7 +14,7 @@ Firstly, make sure you have installed all items mentioned in the [prerequisites]
 
 ## Kick start a Helidon application
 
-In this post, we will create *Helidon SE* project for demonstration purpose. In comparison, I will introduce the usage of **Helidon MP** in another post.
+In this post, we will create *Helidon SE* project for demonstration purpose. In comparison, I will share my experience of **Helidon MP** in another post. I am also an newbie of Helidon ):.
 
 ### Generate project skeleton
 
