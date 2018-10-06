@@ -593,7 +593,7 @@ In your `Service`, you can send error to client directly via `WebResponse.send` 
 
 And you can also use `WebRequest.next` to pass the exception to the downstream to handle it later. 
 
-In this example, we defined an exception named `PostNotFoundException`.
+In this example, define an exception named `PostNotFoundException`.
 
 ```java
 public class PostNotFoundException extends RuntimeException {
@@ -603,7 +603,7 @@ public class PostNotFoundException extends RuntimeException {
 }
 ```
 
-When a post was not found by id, try to throw an exception.
+When a post is not found by id, try to pass the `PostNotFoundException` to the downstream.
 
 ```java
 String id = serverRequest.path().param("id");
@@ -614,7 +614,7 @@ if (post == null) {
 serverResponse.status(200).send(EntityUtils.toJsonObject(post));
 ```
 
-In `Main` class, handles the exception in the `error` method. 
+In the `Main` class, handle the exception in the `createRouting` method. 
 
 ```java
 private static Routing createRouting() {
@@ -635,8 +635,7 @@ private static ErrorHandler<Throwable> handleErrors() {
 }
 ``` 
 
-
-Run this application, try to use curl to test if the error handling worked as expected.
+Starts the application, use curl to check if the error handling is worked as expected.
 
 ```
 curl -v http://localhost:8080/posts/noneExisting
