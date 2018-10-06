@@ -566,8 +566,80 @@ public void update(Routing.Rules rules) {
 }
 ```
 
->Note: In the `CommentService`, we have to use `path().absolute().param()`  to get the param in the parent path, `path().param()` will return null. 
+>Note: In the `CommentService`, we have to use `path().absolute().param()`  to get the param in the parent path, `path().param()` will return null when you try to get post id in the parent path. 
 
 ### Handle error in Routing
+
+In your `Service`, you can send error to client directly via `WebResponse.send` if there is an exception or an error occurred. 
+
+And you can also use `WebRequest.next` to pass the exception to the downstream to handle it later. 
+
+In this example, we defined an exception named `PostNotFoundException`.
+
+```java
+public class PostNotFoundException extends RuntimeException {
+    public PostNotFoundException(String id) {
+        super("Post:" + id + " was not found!");
+    }
+}
+```
+
+When a post was not found by id, try to throw an exception.
+
+```java
+String id = serverRequest.path().param("id");
+Post post = this.posts.getById(id);
+if (post == null) {
+	serverRequest.next(new PostNotFoundException(id));
+}
+serverResponse.status(200).send(EntityUtils.toJsonObject(post));
+```
+
+In `Main` class, handles the exception in the `error` method. 
+
+```java
+private static Routing createRouting() {
+	return Routing.builder()
+		//...
+		.error(Throwable.class, handleErrors())
+		.build();
+}
+
+private static ErrorHandler<Throwable> handleErrors() {
+	return (req, res, t) -> {
+		if (t instanceof PostNotFoundException) {
+			res.status(404).send(((PostNotFoundException) t).getMessage());
+		} else {
+			req.next(t);
+		}
+	};
+}
+``` 
+
+
+Run this application, try to use curl to test if the error handling worked as expected.
+
+```
+curl -v http://localhost:8080/posts/noneExisting
+*   Trying ::1...
+* TCP_NODELAY set
+* Connected to localhost (::1) port 8080 (#0)
+> GET /posts/noneExisting HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/7.55.1
+> Accept: */*
+>
+< HTTP/1.1 404 Not Found
+< Content-Type: text/plain;charset=UTF-8
+< Date: Sat, 6 Oct 2018 14:53:56 +0800
+< transfer-encoding: chunked
+< connection: keep-alive
+<
+Post:noneExisting was not found!* Connection #0 to host localhost left intact
+```
+
+Get the [source codes](https://github.com/hantsy/helidon-sample) from my github, and play it yourself.
+
+
 
 
