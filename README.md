@@ -8,17 +8,17 @@ Helidon provides two programming models for developers.
 
 * For those familiar with Java EE/MicroProfile specifications, **helidon-mp** provides MicroProfile compatibility, it is easy to update yourself to Helidon.  
 
-For the above cases, Helidon provides two Maven archetypes for generating the project skeleton in seconds. Follow the [Getting Started](https://helidon.io/docs/latest/#/getting-started) guide of the official docs, it is easy to create a Helidon project via these Maven archetypes.
+For the above cases, Helidon provides two Maven archetypes for generating the project skeleton in seconds. Follow the [Getting Started](https://helidon.io/docs/latest/#/getting-started) guide of the official docs, it is easy to create a Helidon project via these Maven archetypes in seconds.
 
-Firstly, let's make sure you have installed all items mentioned in the [prerequisites](https://helidon.io/docs/latest/#/getting-started/01_prerequisites), next let's create your first Helidon project.
+Firstly, make sure you have installed all items mentioned in the [prerequisites](https://helidon.io/docs/latest/#/getting-started/01_prerequisites), next let's try to create your first Helidon project.
 
-## Kick start your first helidon application
+## Kick start a Helidon application
 
-In this post, we will create *Helidon SE* project.
+In this post, we will create *Helidon SE* project for demonstration purpose. In comparison, I will introduce the usage of **Helidon MP** in another post.
 
 ### Generate project skeleton
 
-Run the following command to generate a project from Helidon SE archetype.
+Open your terminal, run the following command to generate a project from Helidon SE archetype.
 
 ```bash
 mvn archetype:generate -DinteractiveMode=false \
@@ -30,11 +30,11 @@ mvn archetype:generate -DinteractiveMode=false \
     -Dpackage=io.helidon.examples.quickstart.se
 ```
 
-After it is done, a new folder named **quickstart-se** will be created in the current folder, which contains the source codes of the project.
+After it is done, a new folder named **quickstart-se** will be created in the current folder, which contains the skeleton codes of this project.
 
 ### Build 
 
-Open a terminal tool, enter the **quickstart-se** folder, run the following command to build the project.
+In your terminal, switch to the newly created **quickstart-se** folder, run the following command to build the project.
 
 ```
 mvn clean package
@@ -54,7 +54,7 @@ $ java -jar target/quickstart-se.jar
 WEB server is up! http://localhost:8080
 ```
 
-Let's test the sample API by `curl` command.
+Let's test the sample API using `curl` command.
 
 ```
 curl http://localhost:8080/greet
@@ -73,7 +73,7 @@ curl -X PUT http://localhost:8080/greet/greeting/Hantsy
 
 ### Explore the source codes
 
-Import the source codes into your favorite IDE, the project structure is like this. 
+Import the source codes into your favorite IDE(Intellij IDEA, Eclipse, Apache NetBeans etc), expands all nodes, the project structure looks like this. 
 
 ```
 .
@@ -109,7 +109,9 @@ Import the source codes into your favorite IDE, the project structure is like th
 
 In the pom.xml file, it defines a `maven-dependency-plugin` plugin to copy all its dependencies into *target/libs* folder, and package this project into a single **thin** jar file by `maven-jar-plugin`. When you ran `java -jar quickstart-se.jar`, it will search classpaths in the *libs* folder. 
 
-`maven-jar-plugin` specifies `io.helidon.examples.quickstart.se.Main` as main class, which is responsible for bootstrapping the application. In the  `io.helidon.examples.quickstart.se.Main` file, there is a `main` method, which handles the following things:
+`maven-jar-plugin` specifies `io.helidon.examples.quickstart.se.Main` as main class, which is responsible for bootstrapping the application. 
+
+In the  `io.helidon.examples.quickstart.se.Main` file, there is a `main` method, which handles the following things:
 
 * Configure logging with jdk logging framework.
 * Load the server configuration via helidon Config APIs.
@@ -122,7 +124,7 @@ The `createRouting` method configures the routing rules, here it connects `/gree
 
 ## Build your REST APIs
 
-As an example, we reuse the blog application concept which I have used to demonstrate different technologies, check the sample codes for Spring and Java EE from My github account. 
+As an example, we reuse the blog application concept which I have used to demonstrate different technologies, check the sample codes for Spring and Java EE from [My github account](https://github.com/hantsy). 
 
 
 ### Cook your first APIs
