@@ -1,3 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [A Quick Glance at Helidon project](#a-quick-glance-at-helidon-project)
+  - [Kick start a Helidon application](#kick-start-a-helidon-application)
+    - [Generate project skeleton](#generate-project-skeleton)
+    - [Build](#build)
+    - [Run](#run)
+    - [Explore the source codes](#explore-the-source-codes)
+  - [Build your REST APIs](#build-your-rest-apis)
+    - [Cook your first APIs](#cook-your-first-apis)
+    - [Create comment APIs](#create-comment-apis)
+    - [Handle error in Routing](#handle-error-in-routing)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # A Quick Glance at Helidon project
 
 Oracle open-sourced a project named [Helidon](https://helidon.io/) which is a collection of libraries for building Microservice based applications.

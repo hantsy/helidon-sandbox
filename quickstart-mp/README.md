@@ -1,3 +1,18 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Helidon Example: quickstart-mp](#helidon-example-quickstart-mp)
+  - [Prerequisites](#prerequisites)
+  - [Build](#build)
+  - [Start the application](#start-the-application)
+  - [Exercise the application](#exercise-the-application)
+  - [Build the Docker Image](#build-the-docker-image)
+  - [Start the application with Docker](#start-the-application-with-docker)
+  - [Deploy the application to Kubernetes](#deploy-the-application-to-kubernetes)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 # Helidon Example: quickstart-mp
 
