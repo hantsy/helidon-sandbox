@@ -35,6 +35,7 @@ public class PostServiceTest {
     static void destroyClass() {
         CDI<Object> current = CDI.current();
         ((SeContainer) current).close();
+        server.stop();
     }
 
 

@@ -76,6 +76,7 @@ class MainTest {
     static void destroyClass() {
         CDI<Object> current = CDI.current();
         ((SeContainer) current).close();
+        server.stop();
     }
 
     private String getConnectionString(String path) {

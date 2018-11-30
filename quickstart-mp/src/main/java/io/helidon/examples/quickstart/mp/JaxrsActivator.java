@@ -29,7 +29,7 @@ import javax.ws.rs.core.Application;
  */
 @ApplicationScoped
 @ApplicationPath("/")
-public class BlogApplication extends Application {
+public class JaxrsActivator extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
