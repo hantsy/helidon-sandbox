@@ -1,15 +1,15 @@
 
 # Building an application with Helidon MP
 
-In the last post, we have discussed [building an application with Helidon SE](./GS-SE). In this post, we will use implements the same RESTful APIs, but use **Helidon MP** feature instead. 
+In the last post, we have discussed [building an application with Helidon SE](https://medium.com/@hantsy/a-quick-glance-at-helidon-project-ca8bee8ad34b). In this post, we will use implements the same RESTful APIs, but use **Helidon MP** feature instead. 
 
 ## Kick start a Helidon application
 
-Like the former steps, we can use the official Helidon archetypes to generate a Helidon application skeleton in seconds.
+Follow the steps of official doc, generate an application skeleton from Helidon archetypes in seconds.
 
 ### Generate project skeleton
 
-Open your terminal, run the following command to generate a project from Helidon MP archetype.
+Open your terminal, run the following command to generate our sample project from Helidon MP archetype.
 
 ```bash
 mvn archetype:generate -DinteractiveMode=false \
@@ -122,7 +122,7 @@ If you have some experience of JAX-RS, it is easy to understand the generated sk
 
 ## Build your REST APIs
 
-Next we try to convert the former APIs to use Helidon MP.
+Next we will try to convert our former APIs to use Helidon MP.
 
 
 ### Cook your first APIs
@@ -323,6 +323,8 @@ public class CommentResource {
 }
 ```
 
+The `Comment` and `CommentRepository` is similar to the former version. Please check our source codes for details.
+
 Register it in the `JaxrsActiviator` class. 
 
 ```java
@@ -475,7 +477,7 @@ Note: Unnecessary use of -X or --request, GET is already inferred.
 
 ### Handle exceptions
 
-Like generic JAX-RS in a Java EE application, we can define a custom `ExceptionMapper` to handle the exceptions.
+Like generic JAX-RS support in a traditional Java EE application, we can define a custom `ExceptionMapper` to handle the custom exceptions.
 
 In this example, define an exception named `PostNotFoundException`.
 
@@ -487,7 +489,7 @@ public class PostNotFoundException extends RuntimeException {
 }
 ```
 
-Create an `ExceptionMapper` for `PostNotFoundException`.
+Create an `ExceptionMapper` for this `PostNotFoundException`.
 
 ```java
 @Provider
@@ -499,9 +501,9 @@ public class PostNotFoundExceptionMapper implements ExceptionMapper<PostNotFound
 }
 ```
 
-When a post is not found, set response status as 404.
+`@Provider` can be recognised by JAX-RS container at runtime. When a post is not found, set response status as 404.
 
-Do not forget to register it in the `JaxrsActivator`.
+Do not forget to register it in the `JaxrsActivator` class.
 
 ```java
  @Override
@@ -511,6 +513,8 @@ Do not forget to register it in the `JaxrsActivator`.
         return Collections.unmodifiableSet(set);
     }
 ```
+
+> NOTE: For those who are familiar with Java EE/JAX-RS, please remember to register these JAX-RS components in the JAX-RS activator class manually. In a standard Java EE application, JAX-RS registration is not a must, they can be scanned by container in the container startup stage.
 
 Restarts the application, use curl to check if the error handling is worked as expected.
 
@@ -531,6 +535,8 @@ curl -v http://localhost:8080/posts/noneExisting
 <
 * Connection #0 to host localhost left intact
 ```
+
+## Source Codes
 
 Get the [source codes](https://github.com/hantsy/helidon-sample) from my github, and play it yourself.
 

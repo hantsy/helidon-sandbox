@@ -14,9 +14,9 @@ Firstly, make sure you have installed all items mentioned in the [prerequisites]
 
 ## Helidon SE
 
-* [Getting started tutorial](./GS-SE)
+* [Getting started tutorial](./GS-SE.md)
 
 ## Helidon MP
 
-* [Getting started tutorial](./GS-MP)
+* [Getting started tutorial](./GS-MP.md)
 
