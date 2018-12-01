@@ -1,6 +1,6 @@
 # Helidon Sample 
 
-Oracle open-sourced a project named [Helidon](https://helidon.io/) which is a collection of libraries for building Microservice based applications.
+[Helidon](https://helidon.io/) is a open-sourced project which is a collection of libraries for building Microservice based applications.
 
 Helidon provides two programming models for developers.
 
@@ -8,15 +8,13 @@ Helidon provides two programming models for developers.
 
 * For those familiar with Java EE/MicroProfile specifications, **helidon-mp** provides MicroProfile compatibility, it is easy to update yourself to Helidon.  
 
-For the above cases, Helidon provides two Maven archetypes for generating the project skeleton in seconds. Follow the [Getting Started](https://helidon.io/docs/latest/#/getting-started) guide of the official docs, it is easy to create a Helidon project via these Maven archetypes in seconds.
-
-Firstly, make sure you have installed all items mentioned in the [prerequisites](https://helidon.io/docs/latest/#/getting-started/01_prerequisites), next let's try to create your first Helidon project.
+Firstly make sure you have read the official [Getting Started](https://helidon.io/docs/latest/#/getting-started) guide. And before you create a Helidon project, make sure you have installed all items mentioned in the [prerequisites](https://helidon.io/docs/latest/#/getting-started/01_prerequisites) section.
 
 ## Helidon SE
 
-* [Getting started tutorial](./GS-SE.md)
+* [Getting Started](./GS-SE.md)
 
 ## Helidon MP
 
-* [Getting started tutorial](./GS-MP.md)
+* [Getting Started](./GS-MP.md)
 

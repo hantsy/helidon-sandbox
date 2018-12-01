@@ -1,11 +1,11 @@
 
 # Building an application with Helidon MP
 
-In the last post, we have discussed [building an application with Helidon SE](https://medium.com/@hantsy/a-quick-glance-at-helidon-project-ca8bee8ad34b). In this post, we will use implements the same RESTful APIs, but use **Helidon MP** feature instead. 
+In the last post, we have discussed [building an application with Helidon SE](https://medium.com/@hantsy/a-quick-glance-at-helidon-project-ca8bee8ad34b). In this post, we will implement the same RESTful APIs, but use **Helidon MP** feature instead. 
 
 ## Kick start a Helidon application
 
-Follow the steps of official doc, generate an application skeleton from Helidon archetypes in seconds.
+Follow the steps of the Helidon official document, generating an application skeleton from Helidon archetypes will be done in seconds.
 
 ### Generate project skeleton
 
@@ -21,17 +21,18 @@ mvn archetype:generate -DinteractiveMode=false \
     -Dpackage=io.helidon.examples.quickstart.mp
 ```
 
-After it is done, a new folder named **quickstart-mp** will be created in the current folder, which contains the skeleton codes of this project.
+When it is finished, a new folder named **quickstart-mp** will be created in the current folder, which contains the skeleton codes of this project.
 
 ### Build 
 
-In your terminal, switch to the newly created **quickstart-se** folder, run the following command to build the project.
+Switch to the newly created **quickstart-se** folder, run the following command to build the project.
 
 ```
+cd quickstart-se
 mvn clean package
 ```
 
-When it is finished, you will see there is a jar **quickstart-mp.jar** generated in the *target* folder.
+It will fetch dependencies deinfed in the project pom.xml, build the project, and finally you will see there is a jar **quickstart-mp.jar** generated in the *target* folder.
 
 ### Run 
 
@@ -52,7 +53,7 @@ $ java -jar target/quickstart-mp.jar
 2018.11.30 20:11:22 INFO io.helidon.microprofile.server.ServerImpl Thread[nioEventLoopGroup-2-1,10,main]: Server started on http://localhost:8080 (and all other host addresses) in 2111 milliseconds.
 ```
 
-As you see, different from Helidon SE, a JBoss Weld SE container was bootstrapped in Helidon MP for dependency injection.
+As you see, different from Helidon SE, a JBoss Weld SE container was bootstrapped in Helidon MP based applications for dependency injection support.
 
 Let's test the sample API using `curl` command. By default, the generated codes provide similar sample APIs as the Helidon SE one.
 
@@ -514,9 +515,9 @@ Do not forget to register it in the `JaxrsActivator` class.
     }
 ```
 
-> NOTE: For those who are familiar with Java EE/JAX-RS, please remember to register these JAX-RS components in the JAX-RS activator class manually. In a standard Java EE application, JAX-RS registration is not a must, they can be scanned by container in the container startup stage.
+> NOTE: For those who are familiar with Java EE/JAX-RS, please remember to register these JAX-RS components in the JAX-RS activator class manually. In a standard Java EE application, JAX-RS registration is not a must, they can be scanned by the application container in the container startup stage.
 
-Restarts the application, use curl to check if the error handling is worked as expected.
+Restart the application, use `curl` to check if the error handling is worked as expected.
 
 ```
 curl -v http://localhost:8080/posts/noneExisting
