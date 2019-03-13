@@ -1,4 +1,4 @@
-package io.helidon.examples.quickstart.mp;
+package com.example;
 
 public class PostNotFoundException extends RuntimeException {
     public PostNotFoundException(String id) {

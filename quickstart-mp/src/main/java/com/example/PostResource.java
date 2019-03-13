@@ -1,4 +1,4 @@
-package io.helidon.examples.quickstart.mp;
+package com.example;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;

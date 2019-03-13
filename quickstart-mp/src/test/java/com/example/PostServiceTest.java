@@ -1,5 +1,5 @@
 
-package io.helidon.examples.quickstart.mp;
+package com.example;
 
 import io.helidon.microprofile.server.Server;
 import org.junit.jupiter.api.*;
@@ -53,7 +53,7 @@ public class PostServiceTest {
     @Test
     public void testGetAllPosts() throws Exception {
         String path = "/posts";
-        WebTarget targetGetAll = client.target(URI.create("http://localhost:" + server.getPort() + path));
+        WebTarget targetGetAll = client.target(URI.create("http://localhost:" + server.port() + path));
 
         try (Response resGetAll = targetGetAll.request().accept(MediaType.APPLICATION_JSON_TYPE).get()) {
             assertEquals(200, resGetAll.getStatus());
@@ -69,7 +69,7 @@ public class PostServiceTest {
     @Test
     public void testNoneExistingPostById() throws Exception {
         String path = "/posts/noneexisting";
-        WebTarget targetGetNoneExistingPost = client.target(URI.create("http://localhost:" + server.getPort() + path));
+        WebTarget targetGetNoneExistingPost = client.target(URI.create("http://localhost:" + server.port() + path));
 
         try (Response resGetNoneExisting = targetGetNoneExistingPost.request().accept(MediaType.APPLICATION_JSON_TYPE).get()) {
             assertEquals(404, resGetNoneExisting.getStatus());

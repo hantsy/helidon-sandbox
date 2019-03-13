@@ -1,4 +1,4 @@
-package io.helidon.examples.quickstart.mp;
+package com.example;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

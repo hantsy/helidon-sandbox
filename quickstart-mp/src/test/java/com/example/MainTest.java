@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
-package io.helidon.examples.quickstart.mp;
+package com.example;
+
+import io.helidon.microprofile.server.Server;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import javax.enterprise.inject.se.SeContainer;
 import javax.enterprise.inject.spi.CDI;
@@ -24,12 +30,6 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import io.helidon.microprofile.server.Server;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 class MainTest {
     private static Server server;
@@ -59,10 +59,10 @@ class MainTest {
                 "hello Joe message");
 
         Response r = client
-                .target(getConnectionString("/greet/greeting/Hola"))
+                .target(getConnectionString("/greet/greeting"))
                 .request()
-                .put(Entity.entity("", MediaType.APPLICATION_JSON));
-        Assertions.assertEquals(200, r.getStatus(), "PUT status code");
+                .put(Entity.entity("{\"greeting\" : \"Hola\"}", MediaType.APPLICATION_JSON));
+        Assertions.assertEquals(204, r.getStatus(), "PUT status code");
 
         jsonObject = client
                 .target(getConnectionString("/greet/Jose"))
@@ -70,16 +70,27 @@ class MainTest {
                 .get(JsonObject.class);
         Assertions.assertEquals("Hola Jose!", jsonObject.getString("message"),
                 "hola Jose message");
+
+        r = client
+                .target(getConnectionString("/metrics"))
+                .request()
+                .get();
+        Assertions.assertEquals(200, r.getStatus(), "GET metrics status code");
+
+        r = client
+                .target(getConnectionString("/health"))
+                .request()
+                .get();
+        Assertions.assertEquals(200, r.getStatus(), "GET health status code");
     }
 
     @AfterAll
     static void destroyClass() {
         CDI<Object> current = CDI.current();
         ((SeContainer) current).close();
-        server.stop();
     }
 
     private String getConnectionString(String path) {
-        return "http://localhost:" + server.getPort() + path;
+        return "http://localhost:" + server.port() + path;
     }
 }

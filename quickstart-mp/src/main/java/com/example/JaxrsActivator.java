@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.helidon.examples.quickstart.mp;
+package com.example;
 
 import java.util.Collections;
 import java.util.HashSet;

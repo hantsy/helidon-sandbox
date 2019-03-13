@@ -1,4 +1,4 @@
-package io.helidon.examples.quickstart.mp;
+package com.example;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
