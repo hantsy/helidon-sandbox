@@ -1,4 +1,4 @@
-package io.helidon.examples.quickstart.se;
+package com.example;
 
 public class CommentBodyCanNotBeEmptyException extends RuntimeException {
 }

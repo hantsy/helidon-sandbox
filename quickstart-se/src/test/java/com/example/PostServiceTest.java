@@ -1,5 +1,5 @@
 
-package io.helidon.examples.quickstart.se;
+package com.example;
 
 import io.helidon.webserver.WebServer;
 import org.junit.jupiter.api.*;

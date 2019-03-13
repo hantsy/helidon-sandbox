@@ -1,4 +1,4 @@
-package io.helidon.examples.quickstart.se;
+package com.example;
 
 import javax.json.*;
 import java.time.LocalDateTime;

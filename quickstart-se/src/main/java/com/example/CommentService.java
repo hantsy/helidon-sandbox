@@ -1,4 +1,4 @@
-package io.helidon.examples.quickstart.se;
+package com.example;
 
 import io.helidon.webserver.*;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
-public class CommentService implements Service{
+public class CommentService implements Service {
     private final static Logger LOGGER = Logger.getLogger(CommentService.class.getName());
     private final CommentRepository comments;
 
@@ -22,7 +22,7 @@ public class CommentService implements Service{
     @Override
     public void update(Routing.Rules rules) {
         rules.get("/", this::getAllComments)
-            .post("/", Handler.of(JsonObject.class, this::saveComment, this::errorHandler));
+            .post("/", Handler.create(JsonObject.class, this::saveComment, this::errorHandler));
     }
 
     private void errorHandler(ServerRequest serverRequest, ServerResponse serverResponse, Throwable throwable) {

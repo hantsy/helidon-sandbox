@@ -1,4 +1,4 @@
-package io.helidon.examples.quickstart.se;
+package com.example;
 
 import io.helidon.webserver.Routing;
 import io.helidon.webserver.ServerRequest;

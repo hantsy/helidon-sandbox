@@ -17,8 +17,8 @@
 /**
  * Quickstart demo application
  * <p>
- * Start with {@link io.helidon.examples.quickstart.se.Main} class.
+ * Start with {@link com.example.Main} class.
  *
- * @see io.helidon.examples.quickstart.se.Main
+ * @see com.example.Main
  */
-package io.helidon.examples.quickstart.se;
+package com.example;

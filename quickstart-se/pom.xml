@@ -26,10 +26,10 @@
     <name>${project.artifactId}</name>
 
     <properties>
-        <helidon.version>0.10.5</helidon.version>
+        <helidon.version>1.0.0</helidon.version>
         <!-- Default package. Will be overriden by Maven archetype -->
-        <package>io.helidon.examples.quickstart.se</package>
-        <mainClass>io.helidon.examples.quickstart.se.Main</mainClass>
+        <package>com.example</package>
+        <mainClass>com.example.Main</mainClass>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
         <libs.classpath.prefix>libs</libs.classpath.prefix>
@@ -159,6 +159,16 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>5.1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>5.1.0</version>
+            </dependency>
+            <dependency>
                 <groupId>org.glassfish.jersey</groupId>
                 <artifactId>jersey-bom</artifactId>
                 <version>${version.jersey}</version>
@@ -192,13 +202,26 @@
     </dependencyManagement>
 
     <dependencies>
+
         <dependency>
-            <groupId>io.helidon.webserver</groupId>
-            <artifactId>helidon-webserver-bundle</artifactId>
+            <groupId>io.helidon.bundles</groupId>
+            <artifactId>helidon-bundles-webserver</artifactId>
         </dependency>
         <dependency>
             <groupId>io.helidon.config</groupId>
             <artifactId>helidon-config-yaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.health</groupId>
+            <artifactId>helidon-health</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.health</groupId>
+            <artifactId>helidon-health-checks</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.metrics</groupId>
+            <artifactId>helidon-metrics</artifactId>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
