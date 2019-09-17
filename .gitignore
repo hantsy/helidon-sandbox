@@ -25,3 +25,6 @@ hs_err_pid*
 .idea/
 target/
 
+/helidon-quickstart-mp
+/mp-auth
+/se-auth-basic

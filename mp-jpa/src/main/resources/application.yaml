@@ -1,0 +1,11 @@
+server:
+  port: 8080
+javax:
+  sql:
+    DataSource:
+      blogDataSource:
+        dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+        dataSource:
+          url: jdbc:postgresql://localhost:5432/blogdb
+          user: user
+          password: password

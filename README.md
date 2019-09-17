@@ -1,6 +1,6 @@
 # Helidon Sample 
 
-[Helidon](https://helidon.io/) is a open-sourced project which is a collection of libraries for building Microservice based applications.
+[Helidon](https://helidon.io/) is a collection of libraries for building Microservice based applications, open-sourced by Oracle.
 
 Helidon provides two programming models for developers.
 
@@ -17,4 +17,5 @@ Firstly make sure you have read the official [Getting Started](https://helidon.i
 ## Helidon MP
 
 * [Getting Started](./GS-MP.md)
+* [Data persistence with JPA](./mp-jpa.md)
 
