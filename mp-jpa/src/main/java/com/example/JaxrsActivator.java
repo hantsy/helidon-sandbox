@@ -5,9 +5,6 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.Set;
 
-/**
- * Simple JAXRS Application that registers one resource class.
- */
 @ApplicationScoped
 @ApplicationPath("/")
 public class JaxrsActivator extends Application {

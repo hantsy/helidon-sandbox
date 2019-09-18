@@ -36,7 +36,7 @@ public class CommentResource {
 
     @GET
     public Response getAllComments() {
-        return ok(this.comments.allByPostId(this.postId)).build();
+        return ok(this.comments.findByPostId(this.postId)).build();
     }
 
     @POST

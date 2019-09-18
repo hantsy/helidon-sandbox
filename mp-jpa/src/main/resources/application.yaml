@@ -6,6 +6,10 @@ javax:
       blogDataSource:
         dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
         dataSource:
+#  https://github.com/brettwooldridge/HikariCP
           url: jdbc:postgresql://localhost:5432/blogdb
           user: user
           password: password
+#          databaseName: blogdb
+#          portNumber: 5432
+#          serverName: localhost

@@ -2,9 +2,7 @@ package com.example;
 
 import org.eclipse.persistence.annotations.UuidGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -17,7 +15,11 @@ public class Post implements Serializable {
     String id;
     String title;
     String content;
+    @Enumerated(EnumType.STRING)
+    Status status = Status.DRAFT;
     LocalDateTime createdAt;
+
+    static enum Status{DRAFT, PUBLISHED}
 
     public static Post of(String title, String content) {
         Post post = new Post();

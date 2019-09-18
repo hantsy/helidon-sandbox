@@ -4,10 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +20,7 @@ public class PostRepository {
         // create query
         CriteriaQuery<Post> query = cb.createQuery(Post.class);
         // set the root class
-        Root root = query.from(Post.class);
+        Root<Post> root = query.from(Post.class);
         //perform query
         return this.entityManager.createQuery(query).getResultList();
     }
@@ -35,13 +32,14 @@ public class PostRepository {
         // create query
         CriteriaQuery<Post> query = cb.createQuery(Post.class);
         // set the root class
-        Root root = query.from(Post.class);
+        Root<Post> root = query.from(Post.class);
 
+        // if keyword is provided
         if (q != null && !q.trim().isEmpty()) {
             query.where(
                     cb.or(
-                            cb.like(root.get(Post_.title), q),
-                            cb.like(root.get(Post_.content), q)
+                            cb.like(root.get(Post_.title), "%" + q + "%"),
+                            cb.like(root.get(Post_.content), "%" + q + "%")
                     )
             );
         }
@@ -52,7 +50,7 @@ public class PostRepository {
                 .getResultList();
     }
 
-    public Optional<Post> getById(String id) {
+    public Optional<Post> findById(String id) {
         Post post = null;
         try {
             post = this.entityManager.find(Post.class, id);
@@ -73,15 +71,29 @@ public class PostRepository {
     }
 
     @Transactional
-    public void deleteById(String id) {
+    public int updateStatus(String id, Post.Status status) {
+        CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
+        // create update
+        CriteriaUpdate<Post> delete = cb.createCriteriaUpdate(Post.class);
+        // set the root class
+        Root<Post> root = delete.from(Post.class);
+        // set where clause
+        delete.set(root.get(Post_.status), status);
+        delete.where(cb.equal(root.get(Post_.id), id));
+        // perform update
+        return this.entityManager.createQuery(delete).executeUpdate();
+    }
+
+    @Transactional
+    public int deleteById(String id) {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         // create delete
         CriteriaDelete<Post> delete = cb.createCriteriaDelete(Post.class);
         // set the root class
-        Root root = delete.from(Post.class);
+        Root<Post> root = delete.from(Post.class);
         // set where clause
         delete.where(cb.equal(root.get(Post_.id), id));
         // perform update
-        this.entityManager.createQuery(delete).executeUpdate();
+        return this.entityManager.createQuery(delete).executeUpdate();
     }
 }

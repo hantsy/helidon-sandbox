@@ -41,6 +41,13 @@ public class PostResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    public Response findAll() {
+        return ok(this.posts.findAll()).build();
+    }
+
+    @GET
+    @Path("search")
+    @Produces(MediaType.APPLICATION_JSON)
     @Operation(
             summary = "Get all Posts",
             description = "Get all posts"
@@ -56,7 +63,7 @@ public class PostResource {
                     )
             )
     )
-    public Response getAllPosts(
+    public Response searchByKeyword(
             @Parameter(name = "q", in = ParameterIn.QUERY, description = "keyword match tile or content")
             @QueryParam("q") String q,
             @Parameter(name = "offset", in = ParameterIn.QUERY, description = "pagination offset")
@@ -83,18 +90,26 @@ public class PostResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPostById(@PathParam("id") final String id) {
-        return this.posts.getById(id)
+        return this.posts.findById(id)
                 .map(post -> ok(post).build())
                 .orElseThrow(
                         () -> new PostNotFoundException(id)
                 );
     }
 
+    @Path("{id}/status")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updatePostStatus(@PathParam("id") final String id, @Valid UpdatePostStatusRequest req) {
+        this.posts.updateStatus(id, Post.Status.valueOf(req.getStatus()));
+        return noContent().build();
+    }
+
     @Path("{id}")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePost(@PathParam("id") final String id, @Valid Post post) {
-        return this.posts.getById(id)
+        return this.posts.findById(id)
                 .map(existed -> {
                     existed.setTitle(post.getTitle());
                     existed.setContent(post.getContent());
@@ -111,7 +126,10 @@ public class PostResource {
     @Path("{id}")
     @DELETE
     public Response deletePost(@PathParam("id") final String id) {
-        this.posts.deleteById(id);
+        var deleted = this.posts.deleteById(id);
+        if (deleted == 0) {
+            throw new PostNotFoundException(id);
+        }
         return noContent().build();
     }
 

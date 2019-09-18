@@ -32,19 +32,19 @@ public class CommentRepository {
         // create delete
         CriteriaDelete<Comment> delete = cb.createCriteriaDelete(Comment.class);
         // set the root class
-        Root root = delete.from(Comment.class);
+        Root<Comment> root = delete.from(Comment.class);
         // set where clause
         delete.where(cb.equal(root.get(Comment_.id), id));
         // perform update
         this.entityManager.createQuery(delete).executeUpdate();
     }
 
-    public List<Comment> allByPostId(String id) {
+    public List<Comment> findByPostId(String id) {
         CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
         // create query
         CriteriaQuery<Comment> query = cb.createQuery(Comment.class);
         // set the root class
-        Root root = query.from(Comment.class);
+        Root<Comment> root = query.from(Comment.class);
         query.where(cb.equal(root.get(Comment_.post).get(PostId_.id), id));
         //perform query
         return this.entityManager.createQuery(query).getResultList();
