@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public interface Repository<E, ID> {
 
-    abstract EntityManager entityManager();
+    EntityManager entityManager();
 
     private Class<E> entityClazz() {
         return (Class<E>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];

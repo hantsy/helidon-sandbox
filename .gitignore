@@ -28,3 +28,7 @@ target/
 /helidon-quickstart-mp
 /mp-auth
 /se-auth-basic
+.settings
+.project
+.classpath
+.factorypath

@@ -3,11 +3,11 @@
 
 Helidon 1.3 brings plenty of new features, there are some highlights:
 
-* Add support Microprofile 3.0
+* Add support of Microprofile 3.0
 *  Stabilizes JPA support in Helidon  MP
 *  etc.
 
-In this post, we will continue the work we created in  the post [Getting Started with Helidon MP](./GS-MP.md), and add  JPA support for performing CRUD functionality. 
+In this post, we will continue the work we have done in the post [Getting Started with Helidon MP](./GS-MP.md), and add  JPA support for performing CRUD functionality. 
 
 The source code is available on [Github](https://github.com/hantsy/helidon-sample).
 
@@ -80,7 +80,7 @@ Add the Hikari Connection Pool Extension into the project dependencies, it will 
     <scope>runtime</scope>
 </dependency>
 ```
-Configure `DataSource`  in the *application.yaml* file like this. 
+Configure `DataSource` properties  in the *application.yaml* file like this. 
 
 ```yaml
 javax:
@@ -95,9 +95,9 @@ javax:
           password: password
 ```
 
-A  `DataSource` properties is grouped under the `javax.sql.DataSource`  node.  `blogDataSource`  is the `DataSource`  qualifier name.  `dataSourceClassName` is required by [HikariCP](https://github.com/brettwooldridge/HikariCP). The properties under `dataSource` node are general properties required to define a  `DataSource`. 
+The  `DataSource` properties is grouped under the `javax.sql.DataSource`  node.  `blogDataSource`  is the qualifier name of a  `DataSource` .  `dataSourceClassName` is required by [HikariCP](https://github.com/brettwooldridge/HikariCP). The properties under `dataSource` node are general properties required to define a  `DataSource`. 
 
-You can declare  multi datasources like the following:
+You can declare  multi `DataSource`s like the following:
 
 ```yaml
 javax:
@@ -458,9 +458,9 @@ java -jar target/mp-jpa.jar
 
 ## Bonus 
 
-If you have some experience of Spring Data and Apache DeltaSpike, you will heavily impressed by its `Repository` which drastically simplifies the Repository codes.  Let's have a look at the codes of `PostRepository`  and `CommentRepository` , maybe you have realize some code snippets are very similar.  
+If you have some experience of [Spring Data](https://spring.io/projects/spring-data) and [Apache DeltaSpike](https://deltaspike.apache.org), you may be heavily impressed by their `Repository` which drastically simplifies the Repository codes.  Let's have a look at the codes of `PostRepository`  and `CommentRepository` , maybe you have realize some code snippets are very similar.  
 
-Try to extract a common-purpose `Respository` and allow all repositories inherits from it. 
+Try to extract a common-purpose `Respository` and allow all `Repositories` inherit from it. 
 
 ```java
 public interface Repository<E, ID> {
@@ -491,7 +491,6 @@ public interface Repository<E, ID> {
         return entity;
     }
 
-
     public default Optional<E> findOptionalById(ID id) {
         E entity = null;
         try {
@@ -520,7 +519,7 @@ public interface Repository<E, ID> {
 }
 ```
 
-Ensure your `Repository`  is as sub class of this `Repository`.  For example.
+Ensure your `Repository`  is a sub class of this `Repository`.  The following is an example.
 
 ```java
 @ApplicationScoped
