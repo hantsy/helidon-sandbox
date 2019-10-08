@@ -17,8 +17,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>11</maven.compiler.release>
-<!--        <mainClass>com.example.Main</mainClass>-->
-        <version.lib.junit>5.5.2</version.lib.junit>
+        <mainClass>com.example.Main</mainClass>
         <checkstyle.config.location>etc/checkstyle.xml</checkstyle.config.location>
     </properties>
 
@@ -158,7 +157,6 @@
             <plugin>
                 <groupId>org.jboss.jandex</groupId>
                 <artifactId>jandex-maven-plugin</artifactId>
-                <version>1.0.6</version>
                 <executions>
                     <execution>
                         <id>make-index</id>
@@ -167,30 +165,11 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
-                <configuration>
-                    <argLine>
-                        --illegal-access=permit
-                    </argLine>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.0</version>
-                <configuration>
-                    <argLine>
-                        --illegal-access=permit
-                    </argLine>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
                     <release>11</release>
+<!--                    <compilerArgument>-proc:none</compilerArgument>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -217,13 +196,13 @@
                             <goal>weave</goal>
                         </goals>
                     </execution>
-                    <execution>
+                    <!--<execution>
                         <id>modelgen</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>modelgen</goal>
                         </goals>
-                    </execution>
+                    </execution>-->
                 </executions>
             </plugin>
         </plugins>
