@@ -22,13 +22,17 @@ mvn archetype:generate \
     -DinteractiveMode=false \
     -DarchetypeGroupId=io.helidon.archetypes \
     -DarchetypeArtifactId=helidon-mp \
-    -DarchetypeVersion=1.3.0 \
+    -DarchetypeVersion=1.3.1 \
     -DgroupId=com.example \
     -DartifactId=mp-jpa \
     -Dpackage=com.example \
     -DrestResourceName=PostResource \
     -DapplicationName=JaxrsActivator
 ```
+
+> Note,  there was an issue in version 1.3.0 which blocked a MP application to run successfully under Windows, it is fixed in version 1.3.1,  see [#1038](https://github.com/oracle/helidon/issues/1038). 
+
+
 
 Import the codes into your IDE, such as Intellij IDEA, Apache NetBeans IDE or Eclipse JEE bundle . 
 
@@ -458,9 +462,9 @@ java -jar target/mp-jpa.jar
 
 ## Bonus 
 
-If you have some experience of [Spring Data](https://spring.io/projects/spring-data) and [Apache DeltaSpike](https://deltaspike.apache.org), you may be heavily impressed by their `Repository` which drastically simplifies the Repository codes.  Let's have a look at the codes of `PostRepository`  and `CommentRepository` , maybe you have realize some code snippets are very similar.  
+If you have some experience of [Spring Data](https://spring.io/projects/spring-data) and [Apache DeltaSpike](https://deltaspike.apache.org), you may be heavily impressed by their `Repository` which drastically simplifies the Repository codes.  Let's have a look at the codes of `PostRepository`  and `CommentRepository` , maybe you have realized some code snippets are very similar.  
 
-Try to extract a common-purpose `Respository` and allow all `Repositories` inherit from it. 
+Try to extract a general purpose `Respository` and allow all `Repositories` inherit from it. 
 
 ```java
 public interface Repository<E, ID> {
@@ -534,5 +538,5 @@ public class OrderRepository implements Repository<Order, Long>{
 }
 ```
 
-Hope Helidon will provide a mature solution to simplify the Repository codes.
+Hope Helidon will provide a mature solution to simplify the Repository codes. 
 
