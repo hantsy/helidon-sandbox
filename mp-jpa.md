@@ -52,7 +52,11 @@ First of all, we need to add a Jdbc driver in dependencies for the database we a
 
 As an example, we use PostgreSQL for test purpose.
 
-You can install a PostgreSQL server into your local system  or run a PostgreSQL in docker container. There is a docker-compose available in  [the project repository](https://github.com/hantsy/helidon-sample).
+Next,  make sure there is a running PostgresSQL server when you are running this application. 
+
+You can install a PostgreSQL server into your local system, start it.  Or run a PostgreSQL server in docker container. 
+
+There is a docker-compose file available in  [the project repository](https://github.com/hantsy/helidon-sample) which allow you run a PostgreSQl in Docker container in seconds.
 
 ```yaml
 version: '3.7' # specify docker-compose version
@@ -71,11 +75,11 @@ services:
       - ./data:/var/lib/postgresql
 ```
 
-Execute `docker-compose up` to bootstrap a PostgreSQL server .
+Try to execute `docker-compose up` to bootstrap a PostgreSQL server .
 
-Helidon provides a `DataSource` extension to produce `javax.sql.DataSource` CDI bean  at runtime. And for optimizing database connection, there is a Hikari Connection Pool Extension available.
+Helidon provides a `DataSource` extension to produce `javax.sql.DataSource` CDI bean  at runtime. And for optimizing database connection, there is another Hikari Connection Pool Extension available.
 
-Add the Hikari Connection Pool Extension into the project dependencies, it will includes the `DataSource` extension transitively. 
+Let's add the Hikari Connection Pool Extension into the project dependencies, it will includes the `DataSource` extension transitively. 
 
 ```xml
 <dependency>
@@ -84,7 +88,7 @@ Add the Hikari Connection Pool Extension into the project dependencies, it will 
     <scope>runtime</scope>
 </dependency>
 ```
-Configure `DataSource` properties  in the *application.yaml* file like this. 
+Then configure `DataSource` properties  in the *application.yaml* file like this. 
 
 ```yaml
 javax:
@@ -191,7 +195,7 @@ And create a `persistence.xml` under *src/resources/META-INF/* to configure Ecli
 
 `<jta-data-source/>` specifies which DataSource will be used.  Note here, the value of `eclipselink.target-server`  property is configured as `io.helidon.integrations.cdi.eclipselink.CDISEPlatform` to use a Helidon specific implementation here. 
 
-Now,  in your codes use `@PersistenceContex` to inject `EntityManager`.
+Now,  in your codes use `@PersistenceContex` to inject `EntityManager` like we are doing in the Java EE applications.
 
 ```java
 @PersistenceContext
@@ -288,7 +292,7 @@ public class Post implements Serializable {
 }    
 ```
 
-In the `Post` entity, a  `@Id`  property is to specify the identifier of an Entity,  and the `@GeneratedValue` annotation is to declare the Id generating rule, here we uses a generator named **UUID**, it is defined by `@UuidGenerator`  which is a custom UUID generator from EclipseLink.
+In the `Post` entity, a  `@Id`  property is used to specify the identifier of an Entity,  and the `@GeneratedValue` annotation is to declare the Id generating rule, here we use a generator named **UUID**, it is defined by `@UuidGenerator`  which is a custom UUID generator from EclipseLink.
 
 Next let's deal with the `PostRepository` class.
 
@@ -457,6 +461,7 @@ Almost done, one last thing, do not forget to declare the `Entity` and `Embeddab
 Make sure the database is running, and now you can run the application.
 
 ```bash
+mvn clean package
 java -jar target/mp-jpa.jar
 ```
 
