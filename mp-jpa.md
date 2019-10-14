@@ -465,6 +465,46 @@ mvn clean package
 java -jar target/mp-jpa.jar
 ```
 
+
+
+## Initializing sample data
+
+Create an  `ApplicationScoped` bean to listen CDI `@Initialized(ApplicationScoped.class)` event.  Inject `PostRepository` bean, and insert some data at the application initialization stage.
+
+```java
+@ApplicationScoped
+public class AppInitializer {
+    private final static Logger LOGGER = Logger.getLogger(AppInitializer.class.getName());
+
+    @Inject
+    private PostRepository posts;
+
+    public void onStart(@Observes @Initialized(ApplicationScoped.class) Object init) {
+        LOGGER.info("The application is starting...");
+        Post first = Post.of("Hello Helidon", "My first post of Helidon");
+        Post second = Post.of("Hello Again, Helidon", "My second post of Helidon");
+
+        this.posts.save(first);
+        this.posts.save(second);
+
+        this.posts.findAll().forEach(p -> System.out.println("Post:" + p));
+    }
+
+    void onStop(@Observes @Destroyed(ApplicationScoped.class) Object init) {
+        LOGGER.info("The application is stopping...");
+    }
+}
+```
+
+Run the application again, try to access the `/posts` endpoints by `curl`.
+
+```bash
+> curl http://localhost:8080/posts
+[{"content":"My first post of Helidon","createdAt":"2019-10-14T08:37:40.560054","id":"7B7479F5-9773-47A2-845A-524D151A73E5","title":"Hello Helidon"},{"content":"My second post of Helidon","createdAt":"2019-10-14T08:37:40.560054","id":"2BC4C17B-303A-4799-A229-11ED20A8D67F","title":"Hello Again, Helidon"}]
+```
+
+
+
 ## Bonus 
 
 If you have some experience of [Spring Data](https://spring.io/projects/spring-data) and [Apache DeltaSpike](https://deltaspike.apache.org), you may be heavily impressed by their `Repository` which drastically simplifies the Repository codes.  Let's have a look at the codes of `PostRepository`  and `CommentRepository` , maybe you have realized some code snippets are very similar.  
