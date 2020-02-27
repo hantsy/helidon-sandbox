@@ -12,10 +12,19 @@ Firstly make sure you have read the official [Getting Started](https://helidon.i
 
 ## Helidon SE
 
-* [Getting Started](./GS-SE.md)
-
+* [Getting Started with Helidon SE](./docs/se-started.md)
+ 
 ## Helidon MP
 
-* [Getting Started](./GS-MP.md)
-* [Data persistence with JPA](./mp-jpa.md)
+* [Getting Started with Helidon MP](./docs/mp-started.md)
+* [Data persistence with JPA](./docs/mp-jpa.md)
 
+## Sample Codes
+
+* **se-started** Simple codes for CRUD RESTful APIs.
+* **mp-started** Simple codes for CRUD RESTful APIs.
+* **mp-jpa** Data persistence with JPA.
+
+## References
+
+* [ Quick Started Guide of the Helidon 2.0](https://helidon.io/docs/2.0.0-M1/#/guides/02_quickstart-se)
