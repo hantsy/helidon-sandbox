@@ -9,6 +9,7 @@ import javax.json.JsonObject;
 import java.net.URI;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CommentService implements Service {
@@ -26,6 +27,8 @@ public class CommentService implements Service {
     }
 
     private void errorHandler(ServerRequest serverRequest, ServerResponse serverResponse, Throwable throwable) {
+        LOGGER.log(Level.INFO, "Handling exception: {0}", throwable);
+
         if (throwable instanceof CommentBodyCanNotBeEmptyException) {
             serverResponse.status(400).send();
         } else {

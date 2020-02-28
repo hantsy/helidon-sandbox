@@ -30,14 +30,14 @@ public class CommentService implements Service {
     }
 
     private void errorHandler(ServerRequest serverRequest, ServerResponse serverResponse, Throwable throwable) {
-        LOGGER.log(Level.WARNING, "Handling exception:{0}", throwable);
+        LOGGER.log(Level.WARNING, "Handling exception: {0}", throwable.toString());
         Throwable root = throwable;
 
         if (root instanceof CompletionException || root instanceof ExecutionException) {
             root = root.getCause();
         }
 
-        LOGGER.log(Level.WARNING, "The root cause of exception:{0}", root);
+        LOGGER.log(Level.WARNING, "The root cause of exception: {0}", root.toString());
 
         if (root instanceof CommentBodyCanNotBeEmptyException) {
             serverResponse.status(400).send();
@@ -65,8 +65,7 @@ public class CommentService implements Service {
         String body = content.get("content") == null ? null : content.getString("content");
 
         if (body == null) {
-            serverRequest.next(new CommentBodyCanNotBeEmptyException());
-            return;
+            throw new CommentBodyCanNotBeEmptyException();
         }
 
         CompletableFuture.completedFuture(content)
