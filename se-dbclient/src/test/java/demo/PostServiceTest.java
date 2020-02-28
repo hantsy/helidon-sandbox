@@ -2,7 +2,6 @@
 package demo;
 
 import io.helidon.webserver.WebServer;
-import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import org.junit.jupiter.api.*;
 
 import javax.ws.rs.client.Client;
@@ -17,7 +16,8 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PostServiceTest {
     private final static Logger LOGGER = Logger.getLogger(PostServiceTest.class.getName());
