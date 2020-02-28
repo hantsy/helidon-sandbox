@@ -86,6 +86,11 @@
             <artifactId>helidon-dbclient-webserver-jsonp</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.eclipse</groupId>
+            <artifactId>yasson</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+        <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
