@@ -58,9 +58,30 @@
             <artifactId>helidon-metrics</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.helidon.media.jsonp</groupId>
+            <artifactId>helidon-media-jsonp-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.media.jsonb</groupId>
+            <artifactId>helidon-media-jsonb-server</artifactId>
+        </dependency>
+
+        <!-- DbClient -->
+        <dependency>
             <groupId>io.helidon.dbclient</groupId>
             <artifactId>helidon-dbclient-jdbc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.10</version>
+        </dependency>
+
+        <!-- DbClient tracing, metrics and health checks-->
         <dependency>
             <groupId>io.helidon.dbclient</groupId>
             <artifactId>helidon-dbclient-tracing</artifactId>
@@ -85,26 +106,14 @@
             <groupId>io.helidon.dbclient</groupId>
             <artifactId>helidon-dbclient-webserver-jsonp</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.eclipse</groupId>
-            <artifactId>yasson</artifactId>
-            <version>1.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.10</version>
-        </dependency>
+
+        <!-- JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Jersey client (used to for testing RESR APIs) -->
+        <!-- Jersey client (used to for testing REST APIs) -->
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>

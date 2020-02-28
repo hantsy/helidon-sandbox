@@ -1,6 +1,7 @@
 package demo;
 
 import io.helidon.dbclient.DbClient;
+import io.helidon.dbclient.DbRows;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class PostRepository {
                 )
                 .thenCompose(dbRowDbRows -> dbRowDbRows.map(Post.class).collect());
     }
-
+/*
     public CompletionStage<Post> getById(UUID id) {
         return this.dbClient
                 .execute(
@@ -38,20 +39,29 @@ public class PostRepository {
                     return data.get(0);
                 });
     }
+    */
+
+    public CompletionStage<Post> getById(UUID id) {
+        return this.dbClient
+                .execute(
+                        dbExecute -> dbExecute.createGet("SELECT * FROM posts WHERE id=?")
+                                .addParam(id)
+                                .execute()
+                )
+                .thenApply(
+                        rowOptional -> rowOptional.map(dbRow -> dbRow.as(Post.class)).orElseThrow(() -> new PostNotFoundException(id))
+                );
+    }
 
     public CompletionStage<Long> update(UUID id, Post post) {
         return this.dbClient
                 .inTransaction(
-                        tx -> tx.createQuery("SELECT * FROM posts WHERE id=? FOR UPDATE")
+                        tx -> tx.createGet("SELECT * FROM posts WHERE id=? FOR UPDATE")
                                 .addParam(id)
                                 .execute()
-                                .thenCompose(dbRowDbRows -> dbRowDbRows.map(Post.class).collect())
-                                .thenApply(data -> {
-                                    if (data.isEmpty()) {
-                                        throw new PostNotFoundException(id);
-                                    }
-                                    return data.get(0);
-                                })
+                                .thenApply(
+                                        rowOptional -> rowOptional.map(dbRow -> dbRow.as(Post.class)).orElseThrow(() -> new PostNotFoundException(id))
+                                )
                                 .thenApply(p ->
                                         Map.of("title", post.getTitle(), "content", post.getContent(), "id", id)
                                 )
@@ -71,7 +81,7 @@ public class PostRepository {
                                 .query("INSERT INTO posts(title, content) VALUES (?, ?) RETURNING id", post.getTitle(), post.getContent())
 
                 )
-                .thenCompose(dbRowDbRows -> dbRowDbRows.collect())
+                .thenCompose(DbRows::collect)
                 .thenApply(data -> data.isEmpty() ? null : data.get(0).column("id").as(UUID.class));
     }
 
