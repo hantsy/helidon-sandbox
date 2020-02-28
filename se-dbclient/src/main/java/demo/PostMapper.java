@@ -4,12 +4,9 @@ import io.helidon.dbclient.DbMapper;
 import io.helidon.dbclient.DbRow;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PostMapper implements DbMapper<Post> {
@@ -32,13 +29,13 @@ public class PostMapper implements DbMapper<Post> {
 
     @Override
     public Map<String, ?> toNamedParameters(Post post) {
-        var map = new HashMap<String, Object>();
-        map.put("title", post.getTitle());
-        map.put("content", post.getContent());
-
-        if (post.getId() != null) {
-            map.put("id", post.getId());
-        }
+        var map = Map.of(
+                "title", post.getTitle(),
+                "content", post.getContent()
+        );
+//        if (post.getId() != null) {
+//            map.put("id", post.getId());
+//        }
 //
 //        if (post.getCreatedAt() != null) {
 //            map.put("createdAt", post.getCreatedAt());
