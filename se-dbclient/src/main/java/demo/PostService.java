@@ -15,7 +15,7 @@ public class PostService implements Service {
     private final static Logger LOGGER = Logger.getLogger(PostService.class.getName());
 
     private final PostRepository posts;
-    private final  CommentRepository comments;
+    private final CommentRepository comments;
 
     public PostService(PostRepository posts, CommentRepository comments) {
         this.posts = posts;
@@ -36,7 +36,7 @@ public class PostService implements Service {
         var id = extractIdFromPathParams(serverRequest);
         this.posts.deleteById(id)
                 .thenCompose(
-                        count-> {
+                        count -> {
                             LOGGER.log(Level.INFO, "{0} posts deleted.", count);
                             return serverResponse.status(204).send();
                         }

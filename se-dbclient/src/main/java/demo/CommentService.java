@@ -10,6 +10,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +30,16 @@ public class CommentService implements Service {
     }
 
     private void errorHandler(ServerRequest serverRequest, ServerResponse serverResponse, Throwable throwable) {
-        if (throwable instanceof CommentBodyCanNotBeEmptyException) {
+        LOGGER.log(Level.WARNING, "Handling exception:{0}", throwable);
+        Throwable root = throwable;
+
+        if (root instanceof CompletionException || root instanceof ExecutionException) {
+            root = root.getCause();
+        }
+
+        LOGGER.log(Level.WARNING, "The root cause of exception:{0}", root);
+
+        if (root instanceof CommentBodyCanNotBeEmptyException) {
             serverResponse.status(400).send();
         } else {
             serverRequest.next(throwable);
@@ -55,6 +66,7 @@ public class CommentService implements Service {
 
         if (body == null) {
             serverRequest.next(new CommentBodyCanNotBeEmptyException());
+            return;
         }
 
         CompletableFuture.completedFuture(content)
