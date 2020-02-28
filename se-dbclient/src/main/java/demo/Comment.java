@@ -5,35 +5,32 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Comment implements Serializable {
-    private String id;
-    private String post;
+    private UUID id;
+    private UUID post;
     private String content;
     private LocalDateTime createdAt;
 
-    public static Comment of(String postId, String content) {
+    public static Comment of(UUID postId, String content) {
         Comment comment = new Comment();
 
-        comment.setId(UUID.randomUUID().toString());
         comment.setContent(content);
-        comment.setCreatedAt(LocalDateTime.now());
         comment.setPost(postId);
-
         return comment;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public String getPost() {
+    public UUID getPost() {
         return post;
     }
 
-    public void setPost(String post) {
+    public void setPost(UUID post) {
         this.post = post;
     }
 

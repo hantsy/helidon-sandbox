@@ -13,7 +13,7 @@ PRIMARY KEY (id)
 CREATE TABLE IF NOT EXISTS comments(
 -- id INTEGER NOT NULL PRIMARY KEY DEFAULT nextval('comments_id_seq') ,
 id UUID DEFAULT uuid_generate_v4() ,
-post_id UUID ,
+post_id UUID NOT NULL,
 content VARCHAR(255) NOT NULL,
 created_at TIMESTAMP NOT NULL DEFAULT LOCALTIMESTAMP ,
 PRIMARY KEY (id),

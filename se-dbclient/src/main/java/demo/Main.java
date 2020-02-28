@@ -23,12 +23,10 @@ import java.util.logging.LogManager;
 import io.helidon.config.Config;
 import io.helidon.dbclient.DbClient;
 import io.helidon.dbclient.health.DbClientHealthCheck;
-import io.helidon.dbclient.webserver.jsonp.DbResultSupport;
 import io.helidon.health.HealthSupport;
 import io.helidon.health.checks.HealthChecks;
 import io.helidon.media.jsonp.server.JsonSupport;
 import io.helidon.metrics.MetricsSupport;
-import io.helidon.tracing.config.TracingConfig;
 import io.helidon.webserver.ErrorHandler;
 import io.helidon.webserver.Routing;
 import io.helidon.webserver.ServerConfiguration;
@@ -116,7 +114,8 @@ public final class Main {
 
         var greetService = new GreetService(config);
         var posts = new PostRepository(dbClient);
-        var postService = new PostService(posts);
+        var comments = new CommentRepository(dbClient);
+        var postService = new PostService(posts, comments);
 
         // initializing data...
         DataInitializer.init(dbClient);
@@ -141,7 +140,7 @@ public final class Main {
 
             if (root instanceof PostNotFoundException) {
                 res.status(404).send(root.getMessage());
-            } else{
+            } else {
                 req.next(t);
             }
         };

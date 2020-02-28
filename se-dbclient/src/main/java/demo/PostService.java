@@ -15,9 +15,11 @@ public class PostService implements Service {
     private final static Logger LOGGER = Logger.getLogger(PostService.class.getName());
 
     private final PostRepository posts;
+    private final  CommentRepository comments;
 
-    public PostService(PostRepository posts) {
+    public PostService(PostRepository posts, CommentRepository comments) {
         this.posts = posts;
+        this.comments = comments;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class PostService implements Service {
                 .get("/{id}", this::getPostById)
                 .put("/{id}", this::updatePost)
                 .delete("/{id}", this::deletePostById)
-                .register("/{id}/comments", new CommentService(new CommentRepository()));
+                .register("/{id}/comments", new CommentService(comments));
     }
 
     private void deletePostById(ServerRequest serverRequest, ServerResponse serverResponse) {

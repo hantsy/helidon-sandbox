@@ -1,33 +1,45 @@
 package demo;
 
+import io.helidon.dbclient.DbClient;
+import io.helidon.dbclient.DbRows;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 import static java.util.stream.Collectors.toList;
 
 public class CommentRepository {
-    static Map<String, Comment> data = new ConcurrentHashMap<>();
+    private static final Logger LOGGER = Logger.getLogger(CommentRepository.class.getName());
 
-    public List<Comment> all() {
-        return new ArrayList<>(data.values());
+    private final DbClient dbClient;
+
+    public CommentRepository(DbClient dbClient) {
+        this.dbClient = dbClient;
     }
 
-    public Comment getById(String id) {
-        return data.get(id);
+    public CompletionStage<UUID> save(Comment comment) {
+        return this.dbClient
+                .execute(
+                        dbExecute -> dbExecute
+                                .query("INSERT INTO comments(post_id, content) VALUES (?, ?) RETURNING id", comment.getPost(), comment.getContent())
+
+                )
+                .thenCompose(DbRows::collect)
+                .thenApply(data -> data.isEmpty() ? null : data.get(0).column("id").as(UUID.class));
     }
 
-    public Comment save(Comment comment) {
-        data.put(comment.getId(), comment);
-        return comment;
-    }
-
-    public void deleteById(String id) {
-        data.remove(id);
-    }
-
-    public List<Comment> allByPostId(String id) {
-        return data.values().stream().filter(c -> c.getPost().equals(id)).collect(toList());
+    public CompletionStage<List<Comment>> allByPostId(UUID id) {
+        return this.dbClient
+                .execute(
+                        dbExecute -> dbExecute.createQuery("SELECT * FROM comments WHERE post_id=?")
+                                .addParam(id)
+                                .execute()
+                )
+                .thenCompose(dbRowDbRows -> dbRowDbRows.map(Comment.class).collect());
     }
 }
