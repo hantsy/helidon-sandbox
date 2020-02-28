@@ -463,6 +463,28 @@ public class PostService implements Service {
 
 ```
 
+In the former codes, we used `Routing.builder()...error()` in the `Main` class to handle global exceptions. Here we have to improve it slightly. Because when throwing an exception a `CompletionStage` stream, it wraps it into a  `CompletionException`.
+
+```java
+private static ErrorHandler<Throwable> handleErrors() {
+    return (req, res, t) -> {
+        Throwable root = t;
+
+        while (!(root instanceof PostNotFoundException) && root.getCause() != null) {
+            root = root.getCause();
+        }
+
+        if (root instanceof PostNotFoundException) {
+            res.status(404).send(root.getMessage());
+        } else {
+            req.next(t);
+        }
+    };
+}
+```
+
+
+
 Let's assemble the dependencies in the `Main` class. 
 
 ```java
