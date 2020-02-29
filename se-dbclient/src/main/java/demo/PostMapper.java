@@ -29,18 +29,11 @@ public class PostMapper implements DbMapper<Post> {
 
     @Override
     public Map<String, ?> toNamedParameters(Post post) {
-        var map = Map.of(
+       return Map.of(
+               // "id", post.getId(),
                 "title", post.getTitle(),
                 "content", post.getContent()
         );
-//        if (post.getId() != null) {
-//            map.put("id", post.getId());
-//        }
-//
-//        if (post.getCreatedAt() != null) {
-//            map.put("createdAt", post.getCreatedAt());
-//        }
-        return map;
     }
 
     @Override
