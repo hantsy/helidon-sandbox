@@ -1,10 +1,12 @@
-# Accessing Database with DbClient
+# Accessing Database with DB Client
 
-In my previous article of [introducing Helidon](https://medium.com/@hantsy/a-quick-glance-at-helidon-project-ca8bee8ad34b), I have demonstrated how to create a simple CRUD with RESTful APIs using the functional programming approach provided Helidon SE. But unluckily there is no means to connect to a database using the Helidon SE stack. But things will be changed soon in the upcoming Helidon 2.0. 
+In my previous article of [introducing Helidon](https://medium.com/@hantsy/a-quick-glance-at-helidon-project-ca8bee8ad34b), I have demonstrated how to create a simple CRUD application with RESTful APIs using the functional programming style provided Helidon SE. But unluckily there is no means to connect to a database using the Helidon SE stack at that moment. 
 
-[The first milestone of Helidon 2.0](https://medium.com/helidon/where-helidon-flies-809007221f1f) is on board, it shipped with a new **Db Client** in Helidon SE for database operations, currently it supports Jdbc and Mongo. More info about the breaking changes of Helidon 2.0, check the [Changelog](https://github.com/oracle/helidon/blob/2.0.0-M1/CHANGELOG.md).
+The things will be changed soon in the upcoming Helidon 2.0.  Helidon 2.0 brings a lot of significant changes to the existing stack, including the long-awaited database operating feature(so-called **DB Client**) in Helidon SE. More info about the changes of Helidon 2.0, check the [Changelog](https://github.com/oracle/helidon/blob/2.0.0-M1/CHANGELOG.md).
 
-In this post, we will add **DbClient** to [our former sample application](https://github.com/hantsy/helidon-sandbox/tree/master/se-start), and replace the dummy codes in our **Repository** with true database operations.
+[The first milestone of Helidon 2.0](https://medium.com/helidon/where-helidon-flies-809007221f1f) is on board, currently it supports Jdbc and MongoDB. The Jdbc support is not really reactive APIs,  it wraps the blocking execution into an executor service,  and Mongo implementation is truly reactive due to its underlying ReactiveStreams drivers. 
+
+In this post, we will add **DB Client** to [our former sample application](https://github.com/hantsy/helidon-sandbox/tree/master/se-start), and replace the dummy codes in our **Repository** with real world database operations.
 
 [toc]
 
@@ -104,6 +106,8 @@ mvn archetype:generate -DinteractiveMode=false \
 
 Then copy [the existing codes](https://github.com/hantsy/helidon-sandbox/tree/master/se-start) to this project folder.
 
+> Note: Helidon 2.0 has moved the codebase to Java 11, make sure a JDK 11 is installed for local development environment.  [AdoptOpenJDK](https://adoptopenjdk.net/) is highly recommended for developers.
+
 ## Configuring Db Client
 
 Let's start to contribute database operations using  **DbClient**.
@@ -146,7 +150,7 @@ db:
 
 DbClient uses a mapper class to map the data between database table rows and Java POJOs. 
 
-### Registering a DbMapper
+## Registering a DbMapper
 
 Let's start with the `Post` POJO.
 
@@ -463,7 +467,7 @@ public class PostService implements Service {
 
 ```
 
-In the former codes, we used `Routing.builder()...error()` in the `Main` class to handle global exceptions. Here we have to improve it slightly. Because when throwing an exception a `CompletionStage` stream, it wraps it into a  `CompletionException`.
+In the former codes, we used `Routing.builder()...error()` in the `Main` class to handle global exceptions. Here we have to improve it slightly. When throwing an exception a `CompletionStage` stream, it wraps it into a  `CompletionException`. 
 
 ```java
 private static ErrorHandler<Throwable> handleErrors() {
@@ -562,18 +566,18 @@ public class DataInitializer {
 
 ```
 
-It performs the following tasks.
+It performs the following tasks in sequence.
 
 * Delete all comments
 * Delete all posts
 * Insert two sample posts
 * Query and print all posts
 
-BTW, the `Comment` related changes are similar, check out the source codes from my [Github](https://github.com/hantsy/helidon-sandbox/tree/master/se-dbclient) and explore it yourself.
+BTW, the `Comment` related changes are similar, check out the source codes from my [Github](https://github.com/hantsy/helidon-sandbox/tree/master/se-dbclient) and explore them yourself.
 
 ## Running the Application
 
-To run this application, I prepare a *docker-compose.yaml* to bootstrap a PostgreSQL in docker quickly.
+To run this application, there is a *[docker-compose.yaml](https://github.com/hantsy/helidon-sandbox/blob/master/docker-compose.yml)* available to bootstrap a PostgreSQL in docker quickly.
 
 ```yaml
 version: '3.7' # specify docker-compose version
@@ -664,6 +668,16 @@ Open a terminal, try to test the `/posts` endpoint by `curl` command.
 # curl http://localhost:8080/posts/
 [{"id":"52cdba76-0e18-47e8-8722-453f23bed35a","title":"My second post of Helidon","content":"The content of my second post","createdAt":"2020-02-29T00:15:02.059223"},{"id":"a6201629-bd3b-4c0f-a8df-a94a192f5a02","title":"my test title","content":"my content","createdAt":"2020-02-29T00:15:02.059223"}]
 ```
+
+## Summary
+
+As a developer, for my opinion, I think it is good experience, but it still need further improvements.
+
+*  The `DbMapper` registration via Service Locator is a little tedious,  if we need such a service registration and discovery mechanism, why not introduce JSR330 or Weld SE directly?
+* The `toIndexedParameters` and `toNamedParameters` are not so useful(but you have to implement them when creating a `DbMapper`), it is difficult to satisfy all cases when binding params.
+* Personally, I would like there is a `RowMapper` can be used as an extra parameter when building the query statement, like the one provided in Spring Jdbc. It is more flexible and easier to work with Java 8 Lambda. Of course `DbRows` can do this work as expected.
+* I used `TIMESTAMP` in DDL scripts, but I can not read it as Java 8 `LocalDateTime` in `DbMapper`, but [Java 8 DateTime  is supported in PostgreSQL  Jdbc Driver](https://jdbc.postgresql.org/documentation/head/java8-date-time.html). 
+* Hope there is a next generation of Jdbc or async Jdbc or reactive Jdbc to embrace **ReactiveStreams** in driver level , there are some existing work, such as [R2dbc.io](https://r2dbc.io), [Asynchronous Database Access API (ADBA) ](https://blogs.oracle.com/java/jdbc-next:-a-new-asynchronous-api-for-connecting-to-a-database).
 
 Grab the source codes from my [Github](https://github.com/hantsy/helidon-sandbox/tree/master/se-dbclient).
 
