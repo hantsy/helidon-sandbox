@@ -77,7 +77,7 @@ db:
           description: "Counter of failed DML statements"
   statements:
     # required ping statement
-    ping: "DO 0"
+    ping: "SELECT 1"
 
     # named statements
     insert: "INSERT INTO posts(title, content) VALUES(:title, :content)"

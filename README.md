@@ -13,7 +13,7 @@ Firstly make sure you have read the official [Getting Started](https://helidon.i
 ## Helidon SE
 
 * [Getting Started with Helidon SE](./docs/se-started.md)
-* [Accessing Database with DbClient](./docs/se-dbclient.md)
+* [Accessing Database with DB Client](./docs/se-dbclient.md)
 
 ## Helidon MP
 
@@ -31,7 +31,9 @@ Firstly make sure you have read the official [Getting Started](https://helidon.i
 
 * [Quick Started Guide of the Helidon 2.0](https://helidon.io/docs/2.0.0-M1/#/guides/02_quickstart-se)
 
-* [Where Helidon flies](https://medium.com/helidon/where-helidon-flies-809007221f1f) by Helidon blog
+* [Helidon SE DB Client](https://medium.com/helidon/helidon-db-client-e12bbdc85b7) by Helidon Blog
+
+* [Where Helidon flies](https://medium.com/helidon/where-helidon-flies-809007221f1f) by Helidon Blog
 
 * [Change log of Helidon 2.0 M1](https://github.com/oracle/helidon/blob/2.0.0-M1/CHANGELOG.md)
 
