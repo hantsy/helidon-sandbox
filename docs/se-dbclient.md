@@ -341,7 +341,7 @@ OK, let's go to the update method.
 
 Instead of using `dbClient.execute`, we use `dbClient.inTransaction` here to execute a series of SQL in a transaction.
 
-For updating an existing record, using **SELECT FOR UPDATE** mode is reasonable, query it firstly for a update lock and then perform a update it as expected.
+For updating an existing record, using **[SELECT FOR UPDATE](https://stackoverflow.com/questions/10935850/when-to-use-select-for-update)** mode is reasonable, query it firstly for fetching a update lock and then perform a update it as expected.
 
 Lastly, let's look at the `deleteById` method.
 
@@ -467,7 +467,7 @@ public class PostService implements Service {
 
 ```
 
-In the former codes, we used `Routing.builder()...error()` in the `Main` class to handle global exceptions. Here we have to improve it slightly. When throwing an exception a `CompletionStage` stream, it wraps it into a  `CompletionException`. 
+In the former codes, we used `Routing.builder()...error()` in the `Main` class to handle global exceptions. Here we have to improve it slightly. When throwing an exception in a `CompletionStage` stream, it wraps it into a  `CompletionException`. 
 
 ```java
 private static ErrorHandler<Throwable> handleErrors() {
@@ -676,7 +676,7 @@ As a developer, for my opinion, I think it is good experience, but it still need
 *  The `DbMapper` registration via Service Locator is a little tedious,  if we need such a service registration and discovery mechanism, why not introduce JSR330 or Weld SE directly?
 * The `toIndexedParameters` and `toNamedParameters` are not so useful(but you have to implement them when creating a `DbMapper`), it is difficult to satisfy all cases when binding params.
 * Personally, I would like there is a `RowMapper` can be used as an extra parameter when building the query statement, like the one provided in Spring Jdbc. It is more flexible and easier to work with Java 8 Lambda. Of course `DbRows` can do this work as expected.
-* I used `TIMESTAMP` in DDL scripts, but I can not read it as Java 8 `LocalDateTime` in `DbMapper`, but [Java 8 DateTime  is supported in PostgreSQL  Jdbc Driver](https://jdbc.postgresql.org/documentation/head/java8-date-time.html). 
+* I used `TIMESTAMP` in DDL scripts, but I can not read it as Java 8 `LocalDateTime` in `DbMapper`, but [Java 8 DateTime  is supported in PostgreSQL  Jdbc Driver](https://jdbc.postgresql.org/documentation/head/java8-date-time.html). Obviously, read data from `DbRow` is not exact as from `ResultSet`.
 * Hope there is a next generation of Jdbc or async Jdbc or reactive Jdbc to embrace **ReactiveStreams** in driver level , there are some existing work, such as [R2dbc.io](https://r2dbc.io), [Asynchronous Database Access API (ADBA) ](https://blogs.oracle.com/java/jdbc-next:-a-new-asynchronous-api-for-connecting-to-a-database).
 
 Grab the source codes from my [Github](https://github.com/hantsy/helidon-sandbox/tree/master/se-dbclient).
