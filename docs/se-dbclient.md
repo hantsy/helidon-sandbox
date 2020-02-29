@@ -134,7 +134,11 @@ Add the **Db Client** related dependencies.
 * The `HikariCP` is use for creating Jdbc connection pool.
 * Add the latest `postgresql` Jdbc driver, we will connect a  PostgreSQL server in our application. 
 
-Configure db in the *application.yaml*.
+Configure db in the *application.yaml*. DB Client configuration consists of the following parts.
+
+* source: *jdbc* or *mongo*
+* connection: database connection configuration
+* statements: named statements.
 
 ```yaml
 db:
