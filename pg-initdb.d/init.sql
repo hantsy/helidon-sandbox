@@ -21,3 +21,12 @@ FOREIGN KEY (post_id) REFERENCES posts(id)
 );
 
 -- ALTER SEQUENCE comments_id_seq OWNED BY comments.id;
+
+-- Test jdbc metadata
+CREATE TABLE IF NOT EXISTS Person(
+ID UUID DEFAULT uuid_generate_v4() ,
+FullName VARCHAR(255) NOT NULL,
+Email VARCHAR(255) NOT NULL,
+createdAt TIMESTAMP NOT NULL DEFAULT LOCALTIMESTAMP ,
+PRIMARY KEY (ID)
+);

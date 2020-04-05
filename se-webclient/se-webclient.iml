@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_11">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: io.helidon.bundles:helidon-bundles-webserver:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.webserver:helidon-webserver:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-reactive:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.opentracing:opentracing-util:0.33.0" level="project" />
+    <orderEntry type="library" name="Maven: io.opentracing:opentracing-api:0.33.0" level="project" />
+    <orderEntry type="library" name="Maven: io.opentracing:opentracing-noop:0.33.0" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.tracing:helidon-tracing-config:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec-http2:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.media.jsonp:helidon-media-jsonp-server:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.media.jsonp:helidon-media-jsonp-common:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish:javax.json:1.1.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.1.2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.config:helidon-config-yaml:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.config:helidon-config:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-media-type:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-service-loader:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.microprofile.config:microprofile-config-api:1.3" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.24" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.health:helidon-health:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.microprofile.health:microprofile-health-api:2.1" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.health:helidon-health-checks:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.health:helidon-health-common:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.metrics:helidon-metrics:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-metrics:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.microprofile.metrics:microprofile-metrics-api:2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.0.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.helidon.webclient:helidon-webclient:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-context:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-http:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-key-util:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-configurable:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.media:helidon-media-common:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-mapper:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.45.Final" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-handler-proxy:4.1.45.Final" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-codec-socks:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec-http:4.1.45.Final" level="project" />
+  </component>
+</module>
