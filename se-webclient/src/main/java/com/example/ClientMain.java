@@ -1,5 +1,6 @@
 package com.example;
 
+import io.helidon.common.GenericType;
 import io.helidon.common.http.Http;
 import io.helidon.config.Config;
 import io.helidon.media.common.MediaSupport;
@@ -93,6 +94,7 @@ class PostServiceClient {
         return this.webClient.get()
                 .path("/posts")
                 .request(JsonArray.class)
+              //  .request(new GenericType<List<Post>>(){})
                 .thenApply(data -> {
                     LOGGER.info("data: " + data);
                     return data;
@@ -103,6 +105,7 @@ class PostServiceClient {
         return this.webClient.get()
                 .path("/posts/" +id)
                 .request(JsonObject.class)
+                //.request(Post.class)
                 .thenApply(data -> {
                     LOGGER.info("data: " + data);
                     return data;
