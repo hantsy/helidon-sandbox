@@ -1,25 +1,16 @@
 package com.example;
 
-import io.helidon.common.GenericType;
-import io.helidon.common.http.Http;
 import io.helidon.config.Config;
 import io.helidon.media.common.MediaSupport;
-import io.helidon.media.jsonb.common.JsonBinding;
-import io.helidon.media.jsonb.common.JsonbBodyReader;
-import io.helidon.media.jsonb.common.JsonbBodyWriter;
 import io.helidon.media.jsonp.common.JsonProcessing;
-import io.helidon.media.jsonp.common.JsonpBodyWriter;
 import io.helidon.webclient.WebClient;
 import io.helidon.webclient.WebClientRequestBuilder;
 import io.helidon.webclient.WebClientServiceRequest;
 import io.helidon.webclient.WebClientServiceResponse;
 import io.helidon.webclient.spi.WebClientService;
 
-import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
-import javax.json.bind.JsonbBuilder;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -45,7 +36,7 @@ public class ClientMain {
 //                        .registerWriter(JsonbBodyWriter.create(JsonbBuilder.create()))
                         .build());
 
-        builder.register(new CustomPostWebClientService());
+        builder.register(new LoggingPostWebClientService());
 
         WebClient webClient = builder.build();
 
@@ -63,8 +54,8 @@ public class ClientMain {
 
 }
 
-class CustomPostWebClientService implements WebClientService {
-    private static final Logger LOGGER = Logger.getLogger(CustomPostWebClientService.class.getName());
+class LoggingPostWebClientService implements WebClientService {
+    private static final Logger LOGGER = Logger.getLogger(LoggingPostWebClientService.class.getName());
 
     @Override
     public CompletionStage<WebClientServiceRequest> request(WebClientServiceRequest request) {
@@ -74,10 +65,7 @@ class CustomPostWebClientService implements WebClientService {
 
     @Override
     public CompletionStage<WebClientServiceResponse> response(WebClientRequestBuilder.ClientRequest request, WebClientServiceResponse response) {
-        if (response.status().code() == 404) {
-            throw new RuntimeException("404 exception");
-        }
-
+        LOGGER.info("response status: " + response.status());
         return CompletableFuture.completedFuture(response);
     }
 }
