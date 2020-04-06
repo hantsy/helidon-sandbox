@@ -4,15 +4,14 @@ import io.helidon.media.common.MediaSupport;
 import io.helidon.media.jsonp.common.JsonProcessing;
 import io.helidon.webclient.WebClient;
 import io.helidon.webserver.WebServer;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class PostServiceWebClientTest {
@@ -50,10 +49,12 @@ public class PostServiceWebClientTest {
         }
     }
 
-    @Test
-    public void testHelloWorld() throws Exception {
+    WebClient webClient;
+
+    @BeforeEach
+    public void setup() {
         JsonProcessing jsonProcessing = JsonProcessing.create();
-        WebClient webClient = WebClient.builder()
+        webClient = WebClient.builder()
                 .baseUri("http://localhost:" + webServer.port())
                 .mediaSupport(MediaSupport.builder()
                         .registerDefaults()
@@ -61,7 +62,10 @@ public class PostServiceWebClientTest {
                         .registerWriter(jsonProcessing.newWriter())
                         .build())
                 .build();
+    }
 
+    @Test
+    public void testHelloWorld() throws Exception {
         webClient.get()
                 .path("/greet")
                 .request(JsonObject.class)
@@ -114,6 +118,21 @@ public class PostServiceWebClientTest {
                 .path("/metrics")
                 .request()
                 .thenAccept(response -> Assertions.assertEquals(200, response.status().code()))
+                .exceptionally(throwable -> {
+                    Assertions.fail(throwable);
+                    return null;
+                })
+                .toCompletableFuture()
+                .get();
+    }
+
+    @Test
+    @DisplayName("Get all posts should return 200")
+    public void testGetAllPosts() throws ExecutionException, InterruptedException {
+        webClient.get()
+                .path("/posts")
+                .request(JsonArray.class)
+                .thenAccept(arr -> Assertions.assertEquals(2, arr.size()))
                 .exceptionally(throwable -> {
                     Assertions.fail(throwable);
                     return null;
