@@ -22,13 +22,49 @@
     <orderEntry type="library" name="Maven: io.netty:netty-codec-http2:4.1.45.Final" level="project" />
     <orderEntry type="library" name="Maven: io.helidon.media.jsonp:helidon-media-jsonp-server:2.0.0-M2" level="project" />
     <orderEntry type="library" name="Maven: io.helidon.media.jsonp:helidon-media-jsonp-common:2.0.0-M2" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish:javax.json:1.1.2" level="project" />
-    <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.1.2" level="project" />
-    <orderEntry type="library" name="Maven: io.helidon.config:helidon-config-yaml:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.webclient:helidon-webclient:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-context:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-http:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-key-util:2.0.0-M2" level="project" />
     <orderEntry type="library" name="Maven: io.helidon.config:helidon-config:2.0.0-M2" level="project" />
     <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-media-type:2.0.0-M2" level="project" />
-    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-service-loader:2.0.0-M2" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.microprofile.config:microprofile-config-api:1.3" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.media:helidon-media-common:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-mapper:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler-proxy:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec-socks:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec-http:4.1.45.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.media.jsonb:helidon-media-jsonb-common:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse:yasson:1.0.6" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.json.bind:jakarta.json.bind-api:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.json:jakarta.json-api:1.1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish:jakarta.json:module:1.1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish:javax.json:1.1.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.1.2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.webclient:helidon-webclient-jaxrs:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.jersey:helidon-jersey-client:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-client:2.30.1" level="project" />
+    <orderEntry type="library" name="Maven: jakarta.ws.rs:jakarta.ws.rs-api:2.1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-common:2.30.1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2:osgi-resource-locator:1.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jersey.inject:jersey-hk2:2.30.1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-locator:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2.external:aopalliance-repackaged:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-api:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-utils:2.6.1" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.25.0-GA" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.3.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.activation:javax.activation-api:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-configurable:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-service-loader:2.0.0-M2" level="project" />
+    <orderEntry type="library" name="Maven: io.helidon.config:helidon-config-yaml:2.0.0-M2" level="project" />
     <orderEntry type="library" name="Maven: io.helidon.common:helidon-common:2.0.0-M2" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.24" level="project" />
     <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.3.1" level="project" />
@@ -43,21 +79,5 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.1.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: io.helidon.webclient:helidon-webclient:2.0.0-M2" level="project" />
-    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-context:2.0.0-M2" level="project" />
-    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-http:2.0.0-M2" level="project" />
-    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-key-util:2.0.0-M2" level="project" />
-    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-configurable:2.0.0-M2" level="project" />
-    <orderEntry type="library" name="Maven: io.helidon.media:helidon-media-common:2.0.0-M2" level="project" />
-    <orderEntry type="library" name="Maven: io.helidon.common:helidon-common-mapper:2.0.0-M2" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.45.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.45.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.45.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.45.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.45.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.45.Final" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-handler-proxy:4.1.45.Final" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: io.netty:netty-codec-socks:4.1.45.Final" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-codec-http:4.1.45.Final" level="project" />
   </component>
 </module>
