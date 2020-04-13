@@ -1,16 +1,24 @@
 package com.example;
 
+import io.helidon.common.GenericType;
 import io.helidon.config.Config;
 import io.helidon.media.common.MediaSupport;
+import io.helidon.media.jsonb.common.JsonbBodyReader;
+import io.helidon.media.jsonb.common.JsonbBodyWriter;
 import io.helidon.media.jsonp.common.JsonProcessing;
 import io.helidon.webclient.WebClient;
 import io.helidon.webclient.WebClientRequestBuilder;
 import io.helidon.webclient.WebClientServiceRequest;
 import io.helidon.webclient.WebClientServiceResponse;
+import io.helidon.webclient.metrics.WebClientMetrics;
+import io.helidon.webclient.security.WebClientSecurity;
 import io.helidon.webclient.spi.WebClientService;
+import io.helidon.webclient.tracing.WebClientTracing;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.bind.JsonbBuilder;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -30,13 +38,16 @@ public class ClientMain {
                 .config(config.get("client"))
                 .mediaSupport(MediaSupport.builder()
                         .registerDefaults()
-                         .registerReader(JSON_PROCESSING.newReader())
-                         .registerWriter(JSON_PROCESSING.newWriter())
-//                        .registerReader(JsonbBodyReader.create(JsonbBuilder.create()))
-//                        .registerWriter(JsonbBodyWriter.create(JsonbBuilder.create()))
+ //                        .registerReader(JSON_PROCESSING.newReader())
+ //                        .registerWriter(JSON_PROCESSING.newWriter())
+                        .registerReader(JsonbBodyReader.create(JsonbBuilder.create()))
+                        .registerWriter(JsonbBodyWriter.create(JsonbBuilder.create()))
                         .build());
 
         builder.register(new LoggingPostWebClientService());
+        //builder.register(WebClientMetrics.counter().build());
+        //builder.register(WebClientTracing.create());
+        //builder.register(WebClientSecurity.create());
 
         WebClient webClient = builder.build();
 
@@ -78,22 +89,24 @@ class PostServiceClient {
         this.webClient = webClient;
     }
 
-    public CompletionStage<JsonArray> getAllPosts() {
+    //public CompletionStage<JsonArray> getAllPosts() {
+        public CompletionStage<List<Post>> getAllPosts() {
         return this.webClient.get()
                 .path("/posts")
-                .request(JsonArray.class)
-              //  .request(new GenericType<List<Post>>(){})
+               // .request(JsonArray.class)
+                .request(new GenericType<List<Post>>(){})
                 .thenApply(data -> {
                     LOGGER.info("data: " + data);
                     return data;
                 });
     }
 
-    public CompletionStage<JsonObject> getPostById(UUID id) {
+    //public CompletionStage<JsonObject> getPostById(UUID id) {
+        public CompletionStage<Post> getPostById(UUID id) {
         return this.webClient.get()
                 .path("/posts/" +id)
-                .request(JsonObject.class)
-                //.request(Post.class)
+                //.request(JsonObject.class)
+                .request(Post.class)
                 .thenApply(data -> {
                     LOGGER.info("data: " + data);
                     return data;

@@ -41,21 +41,31 @@
             <groupId>io.helidon.bundles</groupId>
             <artifactId>helidon-bundles-webserver</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.helidon.webclient</groupId>
-            <artifactId>helidon-webclient</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>io.helidon.media.jsonb</groupId>
             <artifactId>helidon-media-jsonb-common</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.helidon.webclient</groupId>
+            <artifactId>helidon-webclient</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.helidon.webclient</groupId>
             <artifactId>helidon-webclient-jaxrs</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>io.helidon.webclient</groupId>
+            <artifactId>helidon-webclient-metrics</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.webclient</groupId>
+            <artifactId>helidon-webclient-tracing</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.webclient</groupId>
+            <artifactId>helidon-webclient-security</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.helidon.config</groupId>
             <artifactId>helidon-config-yaml</artifactId>
