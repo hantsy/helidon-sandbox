@@ -24,7 +24,7 @@
     <parent>
         <groupId>io.helidon.applications</groupId>
         <artifactId>helidon-se</artifactId>
-        <version>2.0.0-M2</version>
+        <version>2.1.0</version>
         <relativePath/>
     </parent>
     <groupId>demo</groupId>
@@ -38,8 +38,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.helidon.bundles</groupId>
-            <artifactId>helidon-bundles-webserver</artifactId>
+            <groupId>io.helidon.webserver</groupId>
+            <artifactId>helidon-webserver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.media</groupId>
+            <artifactId>helidon-media-jsonp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.media</groupId>
+            <artifactId>helidon-media-jsonb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.helidon.media</groupId>
+            <artifactId>helidon-media-jackson</artifactId>
         </dependency>
         <dependency>
             <groupId>io.helidon.config</groupId>
@@ -58,15 +70,19 @@
             <artifactId>helidon-metrics</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.helidon.media.jsonp</groupId>
-            <artifactId>helidon-media-jsonp-server</artifactId>
+            <groupId>io.helidon.tracing</groupId>
+            <artifactId>helidon-tracing</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.helidon.media.jsonb</groupId>
-            <artifactId>helidon-media-jsonb-server</artifactId>
+            <groupId>io.helidon.tracing</groupId>
+            <artifactId>helidon-tracing-zipkin</artifactId>
         </dependency>
 
         <!-- DbClient -->
+        <dependency>
+            <groupId>io.helidon.dbclient</groupId>
+            <artifactId>helidon-dbclient</artifactId>
+        </dependency>
         <dependency>
             <groupId>io.helidon.dbclient</groupId>
             <artifactId>helidon-dbclient-jdbc</artifactId>
@@ -102,10 +118,6 @@
             <groupId>io.helidon.dbclient</groupId>
             <artifactId>helidon-dbclient-jsonp</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.helidon.dbclient</groupId>
-            <artifactId>helidon-dbclient-webserver-jsonp</artifactId>
-        </dependency>
 
         <!-- JUnit 5 -->
         <dependency>
@@ -127,6 +139,7 @@
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.json</artifactId>
+            <version>1.1.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -151,6 +164,15 @@
                 <executions>
                     <execution>
                         <id>copy-libs</id>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.helidon.build-tools</groupId>
+                <artifactId>helidon-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>third-party-license-report</id>
                     </execution>
                 </executions>
             </plugin>

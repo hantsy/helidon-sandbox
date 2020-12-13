@@ -107,12 +107,12 @@ public class PostService implements Service {
 
     private void getAllPosts(ServerRequest serverRequest, ServerResponse serverResponse) {
         this.posts.all()
-                .thenApply(EntityUtils::toJsonArray)
-                .thenCompose(data -> serverResponse.send(data))
-                .exceptionally(throwable -> {
+                .collectList()
+                .map(EntityUtils::toJsonArray)
+                .flatMap(serverResponse::send)
+                .onError(throwable -> {
                     LOGGER.log(Level.WARNING, "Failed to getAllPosts", throwable);
                     serverRequest.next(throwable);
-                    return null;
                 });
     }
 

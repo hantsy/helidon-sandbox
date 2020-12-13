@@ -1,13 +1,13 @@
-# Helidon Quickstart SE Example
+# Helidon Quickstart SE
 
-This project implements a simple Hello World REST service using Helidon SE.
+Sample Helidon SE project that includes multiple REST operations.
 
 ## Build and run
 
 With JDK11+
 ```bash
 mvn package
-java -jar target/se-dbclient.jar
+java -jar target/helidon-quickstart-se.jar
 ```
 
 ## Exercise the application
@@ -47,13 +47,13 @@ curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
 ## Build the Docker Image
 
 ```
-docker build -t se-dbclient .
+docker build -t helidon-quickstart-se .
 ```
 
 ## Start the application with Docker
 
 ```
-docker run --rm -p 8080:8080 se-dbclient:latest
+docker run --rm -p 8080:8080 helidon-quickstart-se:latest
 ```
 
 Exercise the application as described above
@@ -61,13 +61,23 @@ Exercise the application as described above
 ## Deploy the application to Kubernetes
 
 ```
-kubectl cluster-info                # Verify which cluster
-kubectl get pods                    # Verify connectivity to cluster
-kubectl create -f app.yaml   # Deply application
-kubectl get service se-dbclient  # Get service info
+kubectl cluster-info                        # Verify which cluster
+kubectl get pods                            # Verify connectivity to cluster
+kubectl create -f app.yaml                  # Deploy application
+kubectl get pods                            # Wait for quickstart pod to be RUNNING
+kubectl get service helidon-quickstart-se   # Get service info
 ```
 
-## Native image with GraalVM
+Note the PORTs. You can now exercise the application as you did before but use the second
+port number (the NodePort) instead of 8080.
+
+After you’re done, cleanup.
+
+```
+kubectl delete -f app.yaml
+```
+
+## Build a native image with GraalVM
 
 GraalVM allows you to compile your programs ahead-of-time into a native
  executable. See https://www.graalvm.org/docs/reference-manual/aot-compilation/
@@ -80,7 +90,7 @@ You can build a native executable in 2 different ways:
 ### Local build
 
 Download Graal VM at https://www.graalvm.org/downloads, the versions
- currently supported for Helidon are `19.2` and `19.3`.
+ currently supported for Helidon are `20.1.0` and above.
 
 ```
 # Setup the environment
@@ -92,13 +102,13 @@ mvn package -Pnative-image
 You can also put the Graal VM `bin` directory in your PATH, or pass
  `-DgraalVMHome=/path` to the Maven command.
 
-See https://github.com/oracle/helidon-build-tools/tree/master/helidon-maven-plugin
+See https://github.com/oracle/helidon-build-tools/tree/master/helidon-maven-plugin#goal-native-image
  for more information.
 
 Start the application:
 
 ```
-./target/se-dbclient
+./target/helidon-quickstart-se
 ```
 
 ### Multi-stage Docker build
@@ -106,11 +116,60 @@ Start the application:
 Build the "native" Docker Image
 
 ```
-docker build -t se-dbclient-native -f Dockerfile.native .
+docker build -t helidon-quickstart-se-native -f Dockerfile.native .
 ```
 
 Start the application:
 
 ```
-docker run --rm -p 8080:8080 se-dbclient-native:latest
+docker run --rm -p 8080:8080 helidon-quickstart-se-native:latest
+```
+
+## Build a Java Runtime Image using jlink
+
+You can build a custom Java Runtime Image (JRI) containing the application jars and the JDK modules 
+on which they depend. This image also:
+
+* Enables Class Data Sharing by default to reduce startup time. 
+* Contains a customized `start` script to simplify CDS usage and support debug and test modes. 
+ 
+You can build a custom JRI in two different ways:
+* Local
+* Using Docker
+
+
+### Local build
+
+```
+# build the JRI
+mvn package -Pjlink-image
+```
+
+See https://github.com/oracle/helidon-build-tools/tree/master/helidon-maven-plugin#goal-jlink-image
+ for more information.
+
+Start the application:
+
+```
+./target/helidon-quickstart-se/bin/start
+```
+
+### Multi-stage Docker build
+
+Build the "jlink" Docker Image
+
+```
+docker build -t helidon-quickstart-se-jlink -f Dockerfile.jlink .
+```
+
+Start the application:
+
+```
+docker run --rm -p 8080:8080 helidon-quickstart-se-jlink:latest
+```
+
+See the start script help:
+
+```
+docker run --rm helidon-quickstart-se-jlink:latest --help
 ```

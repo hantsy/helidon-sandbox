@@ -1,12 +1,11 @@
 package demo;
 
+import io.helidon.common.reactive.Multi;
+import io.helidon.common.reactive.Single;
 import io.helidon.dbclient.DbClient;
-import io.helidon.dbclient.DbRows;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.CompletionStage;
 
 public class PostRepository {
 
@@ -16,12 +15,13 @@ public class PostRepository {
         this.dbClient = dbClient;
     }
 
-    public CompletionStage<List<Post>> all() {
+    public Multi<Post> all() {
         return this.dbClient
-                .execute(dbExecute -> dbExecute.createQuery("SELECT * FROM posts")
+                .execute(exec -> exec
+                        .createQuery("SELECT * FROM posts")
                         .execute()
                 )
-                .thenCompose(dbRowDbRows -> dbRowDbRows.map(Post.class).collect());
+                .map(dbRow -> dbRow.as(Post.class));
     }
 /*
     public CompletionStage<Post> getById(UUID id) {
@@ -41,55 +41,42 @@ public class PostRepository {
     }
     */
 
-    public CompletionStage<Post> getById(UUID id) {
+    public Single<Post> getById(UUID id) {
         return this.dbClient
-                .execute(
-                        dbExecute -> dbExecute.createGet("SELECT * FROM posts WHERE id=?")
-                                .addParam(id)
-                                .execute()
-                )
-                .thenApply(
-                        rowOptional -> rowOptional.map(dbRow -> dbRow.as(Post.class)).orElseThrow(() -> new PostNotFoundException(id))
-                );
-    }
-
-    public CompletionStage<Long> update(UUID id, Post post) {
-        return this.dbClient
-                .inTransaction(
-                        tx -> tx.createGet("SELECT * FROM posts WHERE id=? FOR UPDATE")
-                                .addParam(id)
-                                .execute()
-                                .thenApply(
-                                        rowOptional -> rowOptional.map(dbRow -> dbRow.as(Post.class)).orElseThrow(() -> new PostNotFoundException(id))
-                                )
-                                .thenApply(p ->
-                                        Map.of("title", post.getTitle(), "content", post.getContent(), "id", id)
-                                )
-                                .thenCompose(
-                                        map -> tx.createUpdate("UPDATE posts SET title=:title, content=:content WHERE id=:id")
-                                                .params(map)
-                                                .execute()
-                                )
-
-                );
-    }
-
-    public CompletionStage<UUID> save(Post post) {
-        return this.dbClient
-                .execute(
-                        dbExecute -> dbExecute
-                                .query("INSERT INTO posts(title, content) VALUES (?, ?) RETURNING id", post.getTitle(), post.getContent())
-
-                )
-                .thenCompose(DbRows::collect)
-                .thenApply(data -> data.isEmpty() ? null : data.get(0).column("id").as(UUID.class));
-    }
-
-    public CompletionStage<Long> deleteById(UUID id) {
-        return this.dbClient.execute(
-                dbExecute -> dbExecute.createDelete("DELETE FROM posts WHERE id = :id")
-                        .addParam("id", id)
+                .execute(exec -> exec
+                        .createGet("SELECT * FROM posts WHERE id=?")
+                        .addParam(id)
                         .execute()
+                )
+                .map(rowOptional -> rowOptional
+                        .map(dbRow -> dbRow.as(Post.class)).orElseThrow(() -> new PostNotFoundException(id))
+                );
+    }
+
+    public Single<Long> update(UUID id, Post post) {
+        return this.dbClient
+                .execute(exec -> exec
+                        .createUpdate("UPDATE posts SET title=:title, content=:content WHERE id=:id")
+                        .params(Map.of("title", post.getTitle(), "content", post.getContent(), "id", post.getId()))
+                        .execute()
+                );
+    }
+
+    public Single<UUID> save(Post post) {
+        return this.dbClient
+                .execute(exec -> exec
+                        .query("INSERT INTO posts(title, content) VALUES (?, ?) RETURNING id", post.getTitle(), post.getContent())
+
+                )
+                .first()
+                .map(data -> data.column("id").as(UUID.class));
+    }
+
+    public Single<Long> deleteById(UUID id) {
+        return this.dbClient.execute(exec -> exec
+                .createDelete("DELETE FROM posts WHERE id = :id")
+                .addParam("id", id)
+                .execute()
         );
     }
 }

@@ -1,7 +1,6 @@
 package demo;
 
-import io.helidon.media.common.MediaSupport;
-import io.helidon.media.jsonp.common.JsonProcessing;
+import io.helidon.media.jsonb.JsonbSupport;
 import io.helidon.webclient.WebClient;
 import io.helidon.webserver.WebServer;
 import org.junit.jupiter.api.*;
@@ -53,14 +52,9 @@ public class PostServiceWebClientTest {
 
     @BeforeEach
     public void setup() {
-        JsonProcessing jsonProcessing = JsonProcessing.create();
         webClient = WebClient.builder()
                 .baseUri("http://localhost:" + webServer.port())
-                .mediaSupport(MediaSupport.builder()
-                        .registerDefaults()
-                        .registerReader(jsonProcessing.newReader())
-                        .registerWriter(jsonProcessing.newWriter())
-                        .build())
+                .addMediaSupport(JsonbSupport.create())
                 .build();
     }
 

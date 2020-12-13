@@ -1,5 +1,6 @@
 package demo;
 
+import io.helidon.common.reactive.Single;
 import io.helidon.webserver.*;
 
 import javax.json.Json;
@@ -9,7 +10,6 @@ import javax.json.JsonObject;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -50,12 +50,12 @@ public class CommentService implements Service {
         UUID postId = extractPostIdFromPathParams(serverRequest);
         LOGGER.info("comments of post id::" + postId);
         this.comments.allByPostId(postId)
-                .thenApply(this::toJsonArray)
-                .thenCompose(data -> serverResponse.send(data))
-                .exceptionally(throwable -> {
+                .collectList()
+                .map(this::toJsonArray)
+                .flatMap(data -> serverResponse.send(data))
+                .onError(throwable -> {
                     LOGGER.log(Level.WARNING, "Failed to getAllComments", throwable);
                     serverRequest.next(throwable);
-                    return null;
                 });
 
     }
@@ -68,6 +68,7 @@ public class CommentService implements Service {
             throw new CommentBodyCanNotBeEmptyException();
         }
 
+        /*
         CompletableFuture.completedFuture(content)
                 .thenApply(c -> Comment.of(postId, body))
                 .thenCompose(this.comments::save)
@@ -83,7 +84,25 @@ public class CommentService implements Service {
                     LOGGER.log(Level.WARNING, "Failed to saveComment", throwable);
                     serverRequest.next(throwable);
                     return null;
-                });
+                });*/
+
+        Single.just(content)
+                .map(c -> Comment.of(postId, body))
+                .flatMap(this.comments::save)
+                .flatMap(
+                        id -> {
+                            serverResponse.status(201)
+                                    .headers()
+                                    .location(URI.create("/posts/" + postId + "/comments/" + id));
+                            return serverResponse.send();
+                        }
+                )
+                .onError(
+                        throwable -> {
+                            LOGGER.log(Level.WARNING, "Failed to saveComment", throwable);
+                            serverRequest.next(throwable);
+                        }
+                );
     }
 
     private UUID extractPostIdFromPathParams(ServerRequest serverRequest) {
