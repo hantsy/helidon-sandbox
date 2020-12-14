@@ -35,10 +35,10 @@ public class PostService implements Service {
     private void deletePostById(ServerRequest serverRequest, ServerResponse serverResponse) {
         var id = extractIdFromPathParams(serverRequest);
         this.posts.deleteById(id)
-                .thenCompose(
+                .subscribe(
                         count -> {
                             LOGGER.log(Level.INFO, "{0} posts deleted.", count);
-                            return serverResponse.status(204).send();
+                            serverResponse.status(204).send();
                         }
                 );
 
@@ -57,16 +57,15 @@ public class PostService implements Service {
     private void updatePost(ServerRequest serverRequest, ServerResponse serverResponse) {
         var id = extractIdFromPathParams(serverRequest);
         serverRequest.content().as(JsonObject.class)
-                .thenApply(EntityUtils::fromJsonObject)
-                .thenCompose(data -> this.posts.update(id, data))
-                .thenCompose(
-                        p -> serverResponse.status(204).send()
-                )
-                .exceptionally(throwable -> {
-                    LOGGER.log(Level.WARNING, "Failed to updatePost", throwable);
-                    serverRequest.next(throwable);
-                    return null;
-                });
+                .map(EntityUtils::fromJsonObject)
+                .flatMap(data -> this.posts.update(id, data))
+                .subscribe(
+                        p -> serverResponse.status(204).send(),
+                        throwable -> {
+                            LOGGER.log(Level.WARNING, "Failed to updatePost", throwable);
+                            serverRequest.next(throwable);
+                        }
+                );
 
     }
 
@@ -74,46 +73,48 @@ public class PostService implements Service {
     private void savePost(ServerRequest serverRequest, ServerResponse serverResponse) {
 
         serverRequest.content().as(JsonObject.class)
-                .thenApply(EntityUtils::fromJsonObject)
-                .thenApply(p ->
+                .map(EntityUtils::fromJsonObject)
+                .map(p ->
                         Post.of(p.getTitle(), p.getContent())
                 )
-                .thenCompose(this.posts::save)
-                .thenCompose(
+                .flatMap(this.posts::save)
+                .subscribe(
                         p -> {
                             serverResponse.status(201)
                                     .headers()
                                     .location(URI.create("/posts/" + p));
-                            return serverResponse.send();
+                            serverResponse.send();
+                        },
+                        throwable -> {
+                            LOGGER.log(Level.WARNING, "Failed to savePost", throwable);
+                            serverRequest.next(throwable);
                         }
-                )
-                .exceptionally(throwable -> {
-                    LOGGER.log(Level.WARNING, "Failed to savePost", throwable);
-                    serverRequest.next(throwable);
-                    return null;
-                });
+                );
     }
 
     private void getPostById(ServerRequest serverRequest, ServerResponse serverResponse) {
         var id = extractIdFromPathParams(serverRequest);
         this.posts.getById(id)
-                .thenCompose(post -> serverResponse.status(200).send(EntityUtils.toJsonObject(post)))
-                .exceptionally(throwable -> {
-                    LOGGER.log(Level.WARNING, "Failed to getPostById", throwable);
-                    serverRequest.next(throwable);
-                    return null;
-                });
+                .subscribe(
+                        post -> serverResponse.status(200).send(EntityUtils.toJsonObject(post)),
+                        throwable -> {
+                            LOGGER.log(Level.WARNING, "Failed to getPostById", throwable);
+                            serverRequest.next(throwable);
+                        }
+                );
     }
 
     private void getAllPosts(ServerRequest serverRequest, ServerResponse serverResponse) {
         this.posts.all()
                 .collectList()
                 .map(EntityUtils::toJsonArray)
-                .flatMap(serverResponse::send)
-                .onError(throwable -> {
-                    LOGGER.log(Level.WARNING, "Failed to getAllPosts", throwable);
-                    serverRequest.next(throwable);
-                });
+                .subscribe(
+                        serverResponse::send,
+                        throwable -> {
+                            LOGGER.log(Level.WARNING, "Failed to getAllPosts", throwable);
+                            serverRequest.next(throwable);
+                        }
+                );
     }
 
 }

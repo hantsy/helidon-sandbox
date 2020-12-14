@@ -3,14 +3,17 @@ package demo;
 import io.helidon.dbclient.DbClient;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DataInitializer {
     private static final Logger LOGGER = Logger.getLogger(DataInitializer.class.getName());
 
     public static void init(DbClient dbClient) {
-        dbClient.inTransaction(
-                tx -> tx.createDelete("DELETE FROM comments").execute()
+        LOGGER.info("Data initialization is starting...");
+        dbClient
+                .inTransaction(tx -> tx
+                        .createDelete("DELETE FROM comments").execute()
                         .flatMap(v -> tx
                                 .createDelete("DELETE FROM posts")
                                 .execute()
@@ -27,8 +30,13 @@ public class DataInitializer {
                                 .createQuery("SELECT * FROM posts")
                                 .execute()
                         )
-                        .onComplete(() -> LOGGER.info("Data initialization is done..."))
-        );
+
+                )
+                .subscribe(
+                        data -> LOGGER.log(Level.INFO, "data:{0}", data),
+                        error -> LOGGER.warning("error: " + error),
+                        () -> LOGGER.info("Data Initialization is done.")
+                );
     }
 
     private DataInitializer() {

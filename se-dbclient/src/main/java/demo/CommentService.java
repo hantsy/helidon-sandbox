@@ -52,11 +52,12 @@ public class CommentService implements Service {
         this.comments.allByPostId(postId)
                 .collectList()
                 .map(this::toJsonArray)
-                .flatMap(data -> serverResponse.send(data))
-                .onError(throwable -> {
-                    LOGGER.log(Level.WARNING, "Failed to getAllComments", throwable);
-                    serverRequest.next(throwable);
-                });
+                .subscribe(serverResponse::send,
+                        throwable -> {
+                            LOGGER.log(Level.WARNING, "Failed to getAllComments", throwable);
+                            serverRequest.next(throwable);
+                        }
+                );
 
     }
 
@@ -89,15 +90,13 @@ public class CommentService implements Service {
         Single.just(content)
                 .map(c -> Comment.of(postId, body))
                 .flatMap(this.comments::save)
-                .flatMap(
+                .subscribe(
                         id -> {
                             serverResponse.status(201)
                                     .headers()
                                     .location(URI.create("/posts/" + postId + "/comments/" + id));
-                            return serverResponse.send();
-                        }
-                )
-                .onError(
+                            serverResponse.send();
+                        },
                         throwable -> {
                             LOGGER.log(Level.WARNING, "Failed to saveComment", throwable);
                             serverRequest.next(throwable);

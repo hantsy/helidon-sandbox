@@ -64,10 +64,6 @@ public class PostServiceWebClientTest {
                 .path("/greet")
                 .request(JsonObject.class)
                 .thenAccept(jsonObject -> Assertions.assertEquals("Hello World!", jsonObject.getString("message")))
-                .exceptionally(throwable -> {
-                    Assertions.fail(throwable);
-                    return null;
-                })
                 .toCompletableFuture()
                 .get();
 
@@ -75,10 +71,6 @@ public class PostServiceWebClientTest {
                 .path("/greet/Joe")
                 .request(JsonObject.class)
                 .thenAccept(jsonObject -> Assertions.assertEquals("Hello Joe!", jsonObject.getString("message")))
-                .exceptionally(throwable -> {
-                    Assertions.fail(throwable);
-                    return null;
-                })
                 .toCompletableFuture()
                 .get();
 
@@ -90,10 +82,6 @@ public class PostServiceWebClientTest {
                         .path("/greet/Joe")
                         .request(JsonObject.class))
                 .thenAccept(jsonObject -> Assertions.assertEquals("Hola Joe!", jsonObject.getString("message")))
-                .exceptionally(throwable -> {
-                    Assertions.fail(throwable);
-                    return null;
-                })
                 .toCompletableFuture()
                 .get();
 
@@ -101,10 +89,6 @@ public class PostServiceWebClientTest {
                 .path("/health")
                 .request()
                 .thenAccept(response -> Assertions.assertEquals(200, response.status().code()))
-                .exceptionally(throwable -> {
-                    Assertions.fail(throwable);
-                    return null;
-                })
                 .toCompletableFuture()
                 .get();
 
@@ -112,10 +96,6 @@ public class PostServiceWebClientTest {
                 .path("/metrics")
                 .request()
                 .thenAccept(response -> Assertions.assertEquals(200, response.status().code()))
-                .exceptionally(throwable -> {
-                    Assertions.fail(throwable);
-                    return null;
-                })
                 .toCompletableFuture()
                 .get();
     }
