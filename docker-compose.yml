@@ -8,11 +8,12 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: test
+      POSTGRES_DB: blogdb
       POSTGRES_USER: user
     volumes:
       - ./data/postgresql:/var/lib/postgresql
-      - ./pg-initdb.d:/docker-entrypoint-initdb.d
+# comment the init.sql when using jpa.
+#     - ./pg-initdb.d:/docker-entrypoint-initdb.d
       
   mongodb: 
     image: mongo

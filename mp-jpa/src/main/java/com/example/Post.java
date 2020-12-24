@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "posts")
 public class Post implements Serializable {
 
     @Id
@@ -17,6 +18,8 @@ public class Post implements Serializable {
     String content;
     @Enumerated(EnumType.STRING)
     Status status = Status.DRAFT;
+
+    @Column(name = "created_at")
     LocalDateTime createdAt;
 
     static enum Status{DRAFT, PUBLISHED}

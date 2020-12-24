@@ -1,20 +1,12 @@
-/*
- * Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 package com.example;
+
+import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -63,7 +55,7 @@ public class GreetResource {
     }
 
     /**
-     * Return a wordly greeting message.
+     * Return a worldly greeting message.
      *
      * @return {@link JsonObject}
      */
@@ -99,6 +91,14 @@ public class GreetResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @RequestBody(name = "greeting",
+            required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(type = SchemaType.STRING, example = "{\"greeting\" : \"Hola\"}")))
+    @APIResponses({
+            @APIResponse(name = "normal", responseCode = "204", description = "Greeting updated"),
+            @APIResponse(name = "missing 'greeting'", responseCode = "400",
+                    description = "JSON did not contain setting for 'greeting'")})
     public Response updateGreeting(JsonObject jsonObject) {
 
         if (!jsonObject.containsKey("greeting")) {

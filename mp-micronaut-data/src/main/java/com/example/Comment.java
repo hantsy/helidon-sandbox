@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comments")
 public class Comment implements Serializable {
 
     @Id
@@ -22,8 +21,6 @@ public class Comment implements Serializable {
     )
     private PostId post;
     private String content;
-
-    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     public static Comment of(String postId, String content) {
