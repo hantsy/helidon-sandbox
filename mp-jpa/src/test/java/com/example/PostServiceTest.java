@@ -12,12 +12,10 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PostServiceTest {
     private final static Logger LOGGER = Logger.getLogger(PostServiceTest.class.getName());
@@ -25,11 +23,14 @@ public class PostServiceTest {
     private Client client;
 
     private static Server server;
+    private static String serverUrl;
 
     @BeforeAll
     public static void startTheServer() throws Exception {
-        server = Main.startServer();
+        server = Server.create().start();
+        serverUrl = "http://localhost:" + server.port();
     }
+
 
     @AfterAll
     static void destroyClass() {
@@ -53,15 +54,15 @@ public class PostServiceTest {
     @Test
     public void testGetAllPosts() throws Exception {
         String path = "/posts";
-        WebTarget targetGetAll = client.target(URI.create("http://localhost:" + server.port() + path));
+        WebTarget targetGetAll = client.target(serverUrl).path(path);
 
         try (Response resGetAll = targetGetAll.request().accept(MediaType.APPLICATION_JSON_TYPE).get()) {
             assertEquals(200, resGetAll.getStatus());
             List<Post> results = resGetAll.readEntity(new GenericType<List<Post>>() {
             });
-            assertTrue(results != null);
+            assertNotNull(results);
             LOGGER.info("results.size()::" + results.size());
-            assertTrue(results.size() == 2);
+            assertEquals(2, results.size());
         }
     }
 
@@ -69,7 +70,7 @@ public class PostServiceTest {
     @Test
     public void testNoneExistingPostById() throws Exception {
         String path = "/posts/noneexisting";
-        WebTarget targetGetNoneExistingPost = client.target(URI.create("http://localhost:" + server.port() + path));
+        WebTarget targetGetNoneExistingPost = client.target(serverUrl).path(path);
 
         try (Response resGetNoneExisting = targetGetNoneExistingPost.request().accept(MediaType.APPLICATION_JSON_TYPE).get()) {
             assertEquals(404, resGetNoneExisting.getStatus());

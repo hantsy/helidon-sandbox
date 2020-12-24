@@ -11,6 +11,7 @@
         <class>com.example.PostId</class>
         <class>com.example.Comment</class>
         <properties>
+            <!-- the persistence properties, see: https://thorben-janssen.com/standardized-schema-generation-data-loading-jpa-2-1/ -->
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="eclipselink.deploy-on-startup" value="true"/>
             <property name="eclipselink.jdbc.native-sql" value="true"/>
