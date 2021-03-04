@@ -1,9 +1,9 @@
 ## Helidon SE
 
-* [Getting Started with Helidon SE](./docs/se-started.md)
-* [Accessing Database with DB Client](./docs/se-dbclient.md)
+* [Getting Started with Helidon SE](./se-started.md)
+* [Accessing Database with DB Client](./se-dbclient.md)
 
 ## Helidon MP
 
-* [Getting Started with Helidon MP](./docs/mp-started.md)
-* [Data Persistence with JPA](./docs/mp-jpa.md)
+* [Getting Started with Helidon MP](./mp-started.md)
+* [Data Persistence with JPA](./mp-jpa.md)
