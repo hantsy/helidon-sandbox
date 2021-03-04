@@ -17,6 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import static javax.ws.rs.core.Response.*;
@@ -27,9 +28,6 @@ public class PostResource {
     private final static Logger LOGGER = Logger.getLogger(PostResource.class.getName());
 
     private final PostRepository posts;
-
-    @Context
-    ResourceContext resourceContext;
 
     @Inject
     public PostResource(PostRepository posts) {
@@ -74,18 +72,19 @@ public class PostResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response savePost(@Valid Post post, UriInfo uriInfo) {
-        var saved = this.posts.save(Post.of(post.getTitle(), post.getContent()));
-        var createdUri = uriInfo.getBaseUriBuilder()
-                .path("/posts/{id}")
-                .build(saved.getId());
-        return created(createdUri).build();
+    public Response savePost(@Valid Post post,  UriInfo uriInfo) {
+        Post saved = this.posts.save(Post.of(post.getTitle(), post.getContent()));
+        return created(
+                uriInfo.getBaseUriBuilder()
+                        .path("/posts/{id}")
+                        .build(saved.getId())
+        ).build();
     }
 
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPostById(@PathParam("id") final String id) {
+    public Response getPostById(@PathParam("id") final UUID id) {
         return this.posts.findById(id)
                 .map(post -> ok(post).build())
                 .orElseThrow(
@@ -96,7 +95,7 @@ public class PostResource {
     @Path("{id}/status")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePostStatus(@PathParam("id") final String id, @Valid UpdatePostStatusRequest req) {
+    public Response updatePostStatus(@PathParam("id") final UUID id, @Valid UpdatePostStatusRequest req) {
         this.posts.updateStatus(id, Post.Status.valueOf(req.getStatus()));
         return noContent().build();
     }
@@ -104,7 +103,7 @@ public class PostResource {
     @Path("{id}")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePost(@PathParam("id") final String id, @Valid Post post) {
+    public Response updatePost(@PathParam("id") final UUID id, @Valid UpdatePostRequest post) {
         return this.posts.findById(id)
                 .map(existed -> {
                     existed.setTitle(post.getTitle());
@@ -121,16 +120,8 @@ public class PostResource {
 
     @Path("{id}")
     @DELETE
-    public Response deletePost(@PathParam("id") final String id) {
-        var deleted = this.posts.deleteById(id);
-        if (deleted == 0) {
-            throw new PostNotFoundException(id);
-        }
+    public Response deletePost(@PathParam("id") final UUID id) {
+        this.posts.deleteById(id);
         return noContent().build();
-    }
-
-    @Path("{id}/comments")
-    public CommentResource postResource() {
-        return resourceContext.getResource(CommentResource.class);
     }
 }
