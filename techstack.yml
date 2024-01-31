@@ -1,0 +1,344 @@
+repo_name: hantsy/helidon-sandbox
+report_id: 555a4d851e6b7c566c3edd60e0feb5e2
+version: 0.1
+repo_type: Public
+timestamp: '2024-01-31T08:28:28+00:00'
+requested_by: hantsy
+provider: github
+branch: master
+detected_tools_count: 24
+tools:
+- name: Java
+  description: A concurrent, class-based, object-oriented, language specifically designed
+    to have as few implementation dependencies as possible
+  website_url: https://www.java.com
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/995/K85ZWV2F.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox
+  detection_source: Repo Metadata
+- name: SQL
+  description: It is a domain-specific language used in programming
+  website_url: https://en.wikipedia.org/wiki/SQL
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/2271/default_068d33483bba6b81ee13fbd4dc7aab9780896a54.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/pg-initdb.d/init.sql
+  detection_source: pg-initdb.d/init.sql
+  last_updated_by: hantsy
+  last_updated_on: 2020-02-28 08:55:23.000000000 Z
+- name: MongoDB
+  description: The database for giant ideas
+  website_url: http://www.mongodb.com/
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/1030/leaf-360x360.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/docker-compose.yml
+  detection_source: docker-compose.yml
+  last_updated_by: hantsy
+  last_updated_on: 2020-02-28 08:55:23.000000000 Z
+- name: PostgreSQL
+  description: A powerful, open source object-relational database system
+  website_url: http://www.postgresql.org/
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/1028/ASOhU5xJ.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/docker-compose.yml
+  detection_source: docker-compose.yml
+  last_updated_by: hantsy
+  last_updated_on: 2020-02-28 08:55:23.000000000 Z
+- name: Apache Maven
+  description: 'Apache build manager for Java projects. '
+  website_url: http://maven.apache.org/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Java Build Tools
+  image_url: https://img.stackshare.io/package_manager/977/default_9833f2ef0bbc2a946b4cc5e9307264033361076b.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/mp-jpa/Dockerfile
+  detection_source: mp-jpa/Dockerfile
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2021-05-12 13:54:39.000000000 Z
+- name: Docker
+  description: Enterprise Container Platform for High-Velocity Innovation.
+  website_url: https://www.docker.com/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Virtual Machine Platforms & Containers
+  image_url: https://img.stackshare.io/service/586/n4u37v9t_400x400.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox
+  detection_source: Repo Metadata
+- name: Docker Compose
+  description: Define and run multi-container applications with Docker
+  website_url: https://github.com/docker/compose
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Container Tools
+  image_url: https://img.stackshare.io/service/3136/docker-compose.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/docker-compose.yml
+  detection_source: docker-compose.yml
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2020-12-24 11:33:44.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox
+  detection_source: Repo Metadata
+- name: GlassFish
+  description: The Open Source Java EE Reference Implementation
+  website_url: https://glassfish.java.net
+  open_source: false
+  hosted_saas: false
+  category: Application Hosting
+  sub_category: Web Servers
+  image_url: https://img.stackshare.io/service/3628/515GX-Cc_400x400.jpg
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/se-dbclient/pom.xml
+  detection_source: se-dbclient/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-02-28 11:01:37.000000000 Z
+- name: JUnit
+  description: A programmer-oriented testing framework for Java
+  website_url: http://junit.org/
+  license: EPL-1.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/2020/874086.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/mp-jpa/pom.xml
+  detection_source: mp-jpa/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2019-09-17 05:41:11.000000000 Z
+- name: Mockito
+  description: Tasty mocking framework for unit tests in Java
+  website_url: https://site.mockito.org/
+  version: 2.15.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/2021/4y634TJm_400x400.jpg
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/se-start/pom.xml
+  detection_source: se-start/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-02-27 14:47:30.000000000 Z
+- name: Mongo
+  description: Heroku provides services and tools to build, run, and scale web applications.
+    Follow @herokustatus for platform updates. A @salesforce company.
+  website_url: http://wedesignapps.herokuapp.com
+  open_source: false
+  hosted_saas: false
+  image_url: https://img.stackshare.io/service/3519/3wgIDj3j_normal.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/docker-compose.yml
+  detection_source: docker-compose.yml
+  last_updated_by: hantsy
+  last_updated_on: 2020-02-28 08:55:23.000000000 Z
+- name: com.zaxxer:HikariCP
+  description: Ultimate JDBC Connection Pool
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/se-dbclient/pom.xml
+  detection_source: se-dbclient/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-02-28 18:14:04.000000000 Z
+- name: io.rest-assured:rest-assured
+  description: Java DSL for easy testing of REST services
+  version: 4.3.3
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/mp-jpa/pom.xml
+  detection_source: mp-jpa/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2019-09-17 05:41:11.000000000 Z
+- name: javax.activation:javax.activation-api
+  description: JavaBeans Activation Framework distribution
+  version: 1.2.0
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/mp-start/pom.xml
+  detection_source: mp-start/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-02-27 14:47:30.000000000 Z
+- name: org.glassfish.jersey.core:jersey-client
+  description: Jersey core client implementation
+  license: NetCDF
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/se-dbclient/pom.xml
+  detection_source: se-dbclient/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-12-13 10:59:54.000000000 Z
+- name: org.glassfish.jersey.inject:jersey-hk2
+  description: HK2 InjectionManager implementation
+  open_source: false
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/se-dbclient/pom.xml
+  detection_source: se-dbclient/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-02-28 18:14:04.000000000 Z
+- name: org.glassfish:javax.json
+  description: Default provider for JSR 374:Java API for Processing JSON
+  version: 1.1.4
+  license: Artistic-1.0,GPL-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/se-dbclient/pom.xml
+  detection_source: se-dbclient/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-12-13 10:59:54.000000000 Z
+- name: org.hamcrest:hamcrest-all
+  description: A self-contained hamcrest jar containing all of the sub-modules in
+    a single artifact
+  version: '1.3'
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/se-start/pom.xml
+  detection_source: mp-jpa/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2019-09-18 13:52:17.000000000 Z
+- name: org.jboss:jandex
+  description: Parent POM for JBoss projects
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/mp-jpa/pom.xml
+  detection_source: mp-jpa/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2019-09-18 13:52:17.000000000 Z
+- name: org.junit.jupiter:junit-jupiter-api
+  description: Module "junit-jupiter-api" of JUnit 5
+  version: 5.1.0
+  license: EPL-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/mp-start/pom.xml
+  detection_source: mp-jpa/pom.xml
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2020-12-24 11:33:44.000000000 Z
+- name: org.junit.jupiter:junit-jupiter-engine
+  description: Module "junit-jupiter-engine" of JUnit 5
+  version: 5.1.0
+  license: EPL-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/mp-start/pom.xml
+  detection_source: mp-jpa/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2019-09-18 13:52:17.000000000 Z
+- name: org.mockito:mockito-core
+  description: Mockito mock objects library core API and implementation
+  version: 2.15.0
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/se-start/pom.xml
+  detection_source: se-start/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-02-27 14:47:30.000000000 Z
+- name: org.postgresql:postgresql
+  description: The PostgreSQL Driver JDBC4
+  version: 42.2.10
+  license: BSD-2-Clause
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/helidon-sandbox/blob/master/se-dbclient/pom.xml
+  detection_source: mp-jpa/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2019-09-18 13:52:17.000000000 Z
+  vulnerabilities:
+  - name: pgjdbc Does Not Check Class Instantiation when providing Plugin Classes
+    cve_id: CVE-2022-21724
+    cve_url: https://github.com/advisories/GHSA-v7wg-cpwc-24m4
+    detected_date: Feb 2
+    severity: high
+    first_patched: 42.2.25
+  - name: PostgreSQL JDBC Driver SQL Injection in ResultSet.refreshRow() with malicious
+      column names
+    cve_id: CVE-2022-31197
+    cve_url: https://github.com/advisories/GHSA-r38f-c4h4-hqq2
+    detected_date: Aug 7
+    severity: high
+    first_patched: 42.2.26
+  - name: Improper Restriction of XML External Entity Reference
+    cve_id: CVE-2020-13692
+    cve_url: https://github.com/advisories/GHSA-88cc-g835-76rp
+    detected_date: Feb 10
+    severity: high
+    first_patched: 42.2.13
+  - name: TemporaryFolder on unix-like systems does not limit access to created files
+    cve_id: CVE-2022-41946
+    cve_url: https://github.com/advisories/GHSA-562r-vg33-8x8h
+    detected_date: Nov 24
+    severity: moderate
+    first_patched: 42.2.27
+  - name: pgjdbc Arbitrary File Write Vulnerability
+    cve_id: 
+    cve_url: https://github.com/advisories/GHSA-673j-qm5f-xpv8
+    detected_date: Feb 16
+    severity: moderate
+    first_patched: 42.3.3
+  - name: Path traversal in org.postgresql:postgresql
+    cve_id: CVE-2022-26520
+    cve_url: https://github.com/advisories/GHSA-727h-hrw8-jg8q
+    detected_date: Sep 8
+    severity: low
+    first_patched: 42.3.3
